@@ -1,0 +1,4 @@
+﻿function AuthorizationController($scope) {
+ 
+
+}

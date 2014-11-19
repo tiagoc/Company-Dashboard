@@ -1,0 +1,65 @@
+﻿<div id="commandModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 10000" ng-show="commandModalShow">
+    <form name="commandForm">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3>Add Custom Commands</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" placeholder="Name" ng-model="command.name">
+                    </div>
+                    <div class="form-group">
+                        <label>Label</label>
+                        <input type="text" class="form-control" placeholder="Label" ng-model="command.label">
+                    </div>
+                    <div class="form-group">
+                        <label>Icon Class</label>
+                        <input type="text" class="form-control" placeholder="Icon Class" ng-model="command.ui.icon">
+                    </div>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" class="form-control" placeholder="Title" name="title" ng-model="command.ui.title" required ng-focus>
+                        <span class="help-block" ng-show="commandForm.title.$error.required&&!commandForm.title.$focused&&commandForm.title.$dirty ">Required!</span>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="command.confirm">
+                                Ask for command confirmation
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="command.confirm">
+                        <label>Confirm Message</label>
+                        <input type="text" ng-model="command.confirmMessage" class="form-control" placeholder="Confirmation Message">
+                    </div>
+                    <div class="form-group">
+                        <label>Command Type</label>
+                        <select class="form-control" data-ng-model="command.type">
+                            <option value="">Select one</option>
+                            <option value="builtIn">builtIn</option>
+                            <option value="visualState">visualState</option>
+                            <option value="custom">custom</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="notifyOnCommand">Notify on command
+                            </label>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button class="btn btn-primary" ng-click="addCommand(command)" ng-disabled="commandForm.$invalid" data-dismiss="modal">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

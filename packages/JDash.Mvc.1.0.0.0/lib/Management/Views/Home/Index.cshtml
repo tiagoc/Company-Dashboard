@@ -1,0 +1,45 @@
+﻿@using JDash.Mvc
+
+<div>
+    @Html.Partial("_PaneCommandModal")
+    @Html.Partial("_DashletCreateModal")
+    <div class="container">
+        <h1>{{title}}</h1>
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th class="col-sm-2">Title</th>
+                    <th class="col-sm-3">Client Module</th>
+                    <th class="col-sm-3">Controller</th>
+                    <th class="col-sm-3">
+                        <select class="form-control searchGroup" ng-change="bindItems()" ng-model="searchGroup">
+                            <option value="" selected>All Group</option>
+                            <option ng-repeat='group in groups' value='{{group}}'>{{group}}</option>
+                        </select></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in items |  filter:filterByGroup " ng-class-odd="'odd'" ng-class-even="'even'" class="listItem">
+                    <td>{{item.title}}</td>
+                    <td>{{item.path}}
+                    </td>
+                    <td>{{item.config.mvcConfig.controller}}</td>
+                    <td>
+                        <div class="module-commands">
+                            <button type="button" class="btn btn-default" ng-click="upateModule(item)" data-toggle="modal" data-target="#moduleModal"><span class="glyphicon glyphicon-edit"></span>Edit</button>
+                            <button type="button" class="btn btn-default" ng-click="delete(item)"><span class="glyphicon glyphicon-remove"></span>Delete</button>
+                            <button type="button" class="btn btn-default" ng-click="cloneDashlet(item)"><span class="glyphicon glyphicon-share"></span>Copy</button>
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination on-select-page="bindItems(page)" num-pages="pager.noOfPages" current-page="pager.currentPage"></pagination>
+    </div>
+</div>
+@section Script {
+    <script type="text/javascript">
+
+    </script>
+}

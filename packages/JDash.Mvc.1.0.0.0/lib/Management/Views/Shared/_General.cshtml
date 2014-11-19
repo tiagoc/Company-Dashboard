@@ -1,0 +1,112 @@
+﻿<div class="form-group">
+    <label>Title</label>
+    <input type="text" class="form-control" ng-model="currentModel.title" name="title" placeholder="Title" required ng-focus>
+    <span class="error" ng-show="myForm.title.$dirty && myForm.title.$error.required&&!myForm.title.$focused">Required!</span>
+</div>
+<div class="form-group">
+    <label>Controller</label>
+    <input type="text" class="form-control" ng-model="currentModel.config.mvcConfig.controller" name="controller" placeholder="Controller" required ng-focus>
+    <span class="error" data-ng-show="myForm.controller.$dirty&&myForm.controller.$error.required && !myForm.title.$focused ">Required!</span>
+</div>
+<div class="form-group">
+    <label>Description</label>
+    <textarea class="form-control" placeholder="Description" ng-model="currentModel.metaData.description"></textarea>
+</div>
+<div class="form-group" ng-show="!checkCreteGroup">
+    <label>Group </label>
+    <select data-ng-model="groupName" class="form-control"
+        data-ng-options="group for group in groups">
+        <option value="">Select one</option>
+    </select>
+
+</div>
+<div class="form-group">
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="checkCreteGroup">
+            Create Group
+        </label>
+    </div>
+</div>
+<div ng-show="checkCreteGroup">
+    <div class="form-group">
+        <label>Group</label>
+        <input type="text" class="form-control" ng-model="customgroupName" placeholder="Set Name for New Group" />
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="useDefaultClientModule">
+            Use default client module
+        </label>
+    </div>
+</div>
+<div ng-show="!useDefaultClientModule">
+    <div class="form-group">
+        <label>Client Module Path</label>
+        <input type="text" class="form-control" ng-model="currentModel.path" placeholder="Client Module Path">
+        <br />
+        <div class="alert alert-info">
+            <p>File extension defaults to .js and should not be specified in path. See RequireJs paths for more information.</p>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label>Css Class</label>
+    <input type="text" class="form-control" ng-model="currentModel.config.mvcConfig.cssClass" placeholder="Css Class">
+</div>
+<div class="form-group">
+    <label>İcon Class</label>
+    <input type="text" class="form-control" ng-model="currentModel.config.iconClass" placeholder="Icon Class">
+</div>
+<div class="checkbox">
+    <label>
+        <input type="checkbox" ng-model="dashletConfigured">
+        Dashlet can be configured by end user
+    </label>
+</div>
+<div ng-show="dashletConfigured">
+    <div class="form-group">
+        <hr />
+        <h2>Editor</h2>
+        <br />
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="useDefaultEditorClientModule">
+                Use default client module
+            </label>
+        </div>
+    </div>
+    <div class="form-group" ng-show="!useDefaultEditorClientModule">
+        <label>Path</label>
+        <input type="text" class="form-control" ng-model="currentModel.config.editor.path" placeholder="Controller">
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="currentModel.config.editor.useWindow">
+                Show editor inside window
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Css Class</label>
+        <input type="text" class="form-control" ng-model="currentModel.config.editor.cssClass" placeholder="Css Class">
+    </div>
+    <div class="form-group">
+        <label>Width</label>
+        <input type="text" class="form-control" ng-model="currentModel.config.editor.width" placeholder="Width">
+    </div>
+    <div class="form-group">
+        <label>Height</label>
+        <input type="text" class="form-control" ng-model="currentModel.config.editor.height" placeholder="Height">
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" ng-model="currentModel.config.editor.autoOpen">
+            Automatically open editor when new a dashlet is added by user
+        </label>
+    </div>
+</div>

@@ -1,0 +1,3 @@
+﻿function PaneCommandController($scope) {
+   
+}

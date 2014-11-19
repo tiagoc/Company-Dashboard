@@ -1,0 +1,75 @@
+﻿<div id="moduleModal"  class="modal  fade" ng-show="showModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="toggleModal(false)" aria-hidden="true">×</button>
+                <h3>{{modalHeader}}</h3>
+            </div>
+            <div class="modal-body">
+                <form name="myForm">
+                    <fieldset>
+                        <div class="row-fluid">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#general" data-toggle="tab">General</a></li>
+
+                                <li><a href="#paneCommands" data-toggle="tab">Pane Commands</a></li>
+                                <li><a href="#dashletConfig" data-toggle="tab">Dashlet Config</a></li>
+                                <li><a href="#authorization" data-toggle="tab">Authorization</a></li>
+                            </ul>
+                            <div class="tab-content" id="myTab">
+                                <div class="tab-pane active" id="general">
+                                    @Html.Partial("_General")
+                                </div>
+                                <div class="tab-pane" id="paneCommands">
+                                    <div class="paneCommands">
+                                        @Html.Partial("_PaneCommands")
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" data-toggle="modal" ng-click="clearCommand()" data-target="#commandModal">Add Command</button>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table" ng-show="!customCommands.length == 0">
+                                            <thead>
+                                                <th>Title</th>
+                                                <th></th>
+
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="customCommand in customCommands">
+                                                    <td>{{customCommand.ui.title}}</td>
+                                                    <td class="pull-right">
+                                                        <button class="btn btn-default" data-toggle="modal" data-target="#commandModal" ng-click="addPaneCommands(customCommand)">Edit</button>
+                                                        <button class="btn btn-danger" data-toggle="modal" ng-click="removeCustomCommand(customCommand)">Remove</button></td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane" id="dashletConfig">
+                                    <div class="form-group">
+                                        <label>Dashlet Config</label>
+                                        <textarea class="form-control" placeholder="Dashlet Config" ng-model="dashletconfig" >
+                                            {{currentModel.dashletConfig |json}}
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="authorization">
+                                    <div id="Authentication">
+                                        @Html.Partial("_Authorization")
+                                    </div>
+                                </div>
+                            </div>
+                    </fieldset>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <span class="label label-important" ng-class="feedBackClass">{{feedBackMessage}}</span>
+                <button class="btn btn-default" data-dismiss="modal" ng-click="toggleModal(false)" aria-hidden="true">Close</button>
+                <button class="btn btn-primary" ng-disabled="myForm.$invalid" ng-click="save()" >Save</button>
+            </div>
+        </div>
+    </div>
+</div>

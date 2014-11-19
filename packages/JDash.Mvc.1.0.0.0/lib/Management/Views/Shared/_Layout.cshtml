@@ -1,0 +1,57 @@
+﻿@using JDash.Mvc
+
+<!DOCTYPE html>
+<html ng-app="KltAdmin">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Management Portal</title>
+    <link href="~/Styles/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Styles/css/admin.css" rel="stylesheet" />
+
+</head>
+<body ng-controller="DashletModuleController">
+    <div class="navbar navbar-fixed-top" role="navigation" id="topMenu">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Dashboard Admin</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="Scripts/app/resource/images/logo.png" /></a>
+            </div>
+            <div class="navbar-collapse collapse top-menu">
+                <ul class="nav navbar-nav ">
+                    <li><a href="#" class="dashletModuleLink" ng-click="toggleModal(true)" data-toggle="modal" data-target="#moduleModal"><i class="glyphicon glyphicon-plus"></i>Create New Module</a></li>
+                </ul>
+                <div class="navbar-right">
+                    <input placeholder="Quick Search..." type="text" ng-change="bindItems()" ng-model="searchText" class="form-control search">
+                </div>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+
+    @RenderBody()
+
+
+
+
+    
+    <script src="Scripts/bootstrap/jquery.js"></script>
+    <script src="Scripts/bootstrap/bootstrap.js"></script>
+    <script src="Scripts/Angular/angular.min.js"></script>
+    <script src="Scripts/angular/ui-bootstrap-tpls-0.2.0.js"></script>
+    <!--<script src="Scripts/Angular/ui-bootstrap-0.1.0.min.js"></script>-->
+    <script src="Scripts/app/admin/KltAdmin.js"></script>
+    <script src="Scripts/app/admin/AuthorizationController.js"></script>
+    <script src="Scripts/app/admin/PaneCommandController.js"></script>
+    <script src="Scripts/app/admin/DashletModuleController.js"></script>
+ 
+    @(Html.JDash().ResourceManager().ClientInitHandler("window.runApp && window.runApp();").Render())
+    @RenderSection("script", false)
+</body>
+</html>

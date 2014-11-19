@@ -1,0 +1,38 @@
+﻿<configuration>
+  <configSections>
+    <section type="JDash.Configuration.DashboardSettingsSection,JDash" name="JDash" />
+  </configSections>
+  <JDash defaultProvider="SQLDashboardProvider" authorizationEnabled="false"
+    apiPath="jdash/api/" autoCreateMetadata="false" jDashController="true">
+    <providers>
+      <clear />
+      <add applicationName="DashboardApp" autoCreateMetadata="false" connectionString="SqlConstr" name="SQLDashboardProvider" type="JDash.SQLProvider.Provider,JDash.SQLProvider" />
+      <add applicationName="DashboardApp" connectionString="mySqlConstr" authorizationEnabled="false" autoCreateMetadata="false" name="MySQLDashboardProvider" type="JDash.MySQLProvider.Provider,JDash.MySQLProvider" />
+    </providers>
+  </JDash>
+  <connectionStrings>
+    <add name="SqlConstr" connectionString="Data Source=[YOUR SQL SERVER];Initial Catalog=[YOUR DATABASE];User ID=[USERNAME];Password=[PASSWORD]" providerName="System.Data.SqlClient"></add>
+    <add name="mySqlConstr" connectionString="Server=[YOUR SERVER];Uid=[USERNAME];Pwd=[PASSWORD];Database=[YOUR DATABASE];" providerName="System.Data.SqlClient"></add>
+  </connectionStrings>
+  <system.web>
+    <pages>
+      <namespaces>
+        <add namespace="JDash.Mvc" />
+      </namespaces>
+    </pages>
+    <httpHandlers>
+      <add path="nls/*.js" verb="GET" type="JDash.Mvc.Core.NlsHandler, JDash.Mvc" />
+    </httpHandlers>
+
+  </system.web>
+  <system.webServer>
+    <validation validateIntegratedModeConfiguration="false" />
+    <modules runAllManagedModulesForAllRequests="true">
+      <remove name="BundleModule" />
+      <add name="BundleModule" type="System.Web.Optimization.BundleModule" />
+    </modules>
+    <handlers>
+      <add name="JDashNlsHandler" path="nls/*.js" verb="GET" type="JDash.Mvc.Core.NlsHandler, JDash.Mvc" />
+    </handlers>
+  </system.webServer>
+</configuration>
