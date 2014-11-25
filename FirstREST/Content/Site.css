@@ -29,27 +29,27 @@ a:hover{
     padding: 2px;
     border: solid 1px;
     border-radius: 4px;
-    background-color: #996600;
+    background-color: #CD853F;
     border-color: #330000;
 }
 
 .nav-tabs > li > a,
 .nav-tabs > li > a:focus{
-    background-color: #996600;
+    background-color: #CD853F;
     border:none;
     border-bottom:solid 3px;
-    border-color: #996600;
+    border-color: #CD853F;
 } 
 
 .nav-tabs > li > a:hover{
-    background-color: #996600;
+    background-color: #CD853F;
     border: none;
     border-bottom: solid 3px;
     border-color:yellow;    
 }
 
 .panel-default {
-    background-color: #996600;
+    background-color: #CD853F;
     border-color: #663300;
 }
 
