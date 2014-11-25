@@ -8,50 +8,61 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <header>
+    <div class="wrapper">
+        <header>
+            <div class="container-fluid">
+                <ul class="nav nav-tabs nav-justified">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="/" role="button" aria-expanded="false">
+                        Sobre Nós <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/About/">Sobre Nós</a></li>
+                            <li><a href="/Contact/">Contatos</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                        Parceiros <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Os Nossos Fornecedores</a></li>
+                            <li><a href="#">Estatísticas</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                        Retalhistas <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Onde Pode Comprar</a></li>
+                            <li><a href="#">Estatísticas</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                        Documentos <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Consultar Documentos</a></li>
+                            <li><a href="#">Registar Documentos</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </header>
         <div class="container-fluid">
-            <ul class="nav nav-tabs nav-justified">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                    Home<span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="/About/">Sobre Nós</a></li>
-                        <li><a href="/Contact/">Contatos</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                    Parceiros<span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Os Nossos Fornecedores</a></li>
-                        <li><a href="#">Estatísticas</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                    Retalhistas<span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Onde Pode Comprar</a></li>
-                        <li><a href="#">Estatísticas</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                    Documentos<span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Consultar Documentos</a></li>
-                        <li><a href="#">Registar Documentos</a></li>
-                    </ul>
-                </li>
-            </ul>
+            @RenderBody()
         </div>
-    </header>
-    <div class="container-fluid">
-        @RenderBody()
+        <div class="push"></div>
+    </div>
+    <div class="footer">
+        <div class="container-fluid">
+            <p>&copy; 2014 GreenOak</p>
+        </div>
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
