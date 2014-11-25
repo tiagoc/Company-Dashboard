@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
+    <title>GreenOak - @ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -11,13 +11,13 @@
     <div class="wrapper">
         <header>
             <div class="container-fluid">
-                <ul class="nav nav-tabs nav-justified">
+                <ul class="nav nav-tabs">
                     <li>
                         <a href="/">Home</a>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="/" role="button" aria-expanded="false">
-                        Sobre Nós <span class="caret"></span>
+                            Sobre Nós <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="/About/">Sobre Nós</a></li>
@@ -26,7 +26,7 @@
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                        Parceiros <span class="caret"></span>
+                            Parceiros <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#">Os Nossos Fornecedores</a></li>
@@ -35,7 +35,7 @@
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                        Retalhistas <span class="caret"></span>
+                            Retalhistas <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#">Onde Pode Comprar</a></li>
@@ -44,7 +44,7 @@
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                        Documentos <span class="caret"></span>
+                            Documentos <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#">Consultar Documentos</a></li>
@@ -54,8 +54,15 @@
                 </ul>
             </div>
         </header>
-        <div class="container-fluid">
-            @RenderBody()
+        <div class="container-fluid content">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@ViewBag.Title</h3>
+                </div>
+                <div class="panel-body">
+                    @RenderBody()   
+                </div>
+            </div>
         </div>
         <div class="push"></div>
     </div>

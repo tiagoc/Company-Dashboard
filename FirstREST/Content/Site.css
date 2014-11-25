@@ -3,6 +3,9 @@
 }
 html, body {
 	height: 100%;
+    background-image: url('/img/wood_pattern.png');
+    background-color: #996600;
+    color: #330000;
 }
 .wrapper {
 	min-height: 100%;
@@ -14,6 +17,30 @@ html, body {
 	height: 30px; /* .push must be the same height as .footer */
 }
 
-li > ul {
-    width:100%;
+a, a:visited{
+    color: #330000;
+}
+
+a:hover{
+    color: #660000;
+}
+
+.nav-tabs {
+    border-bottom-color: #663300;
+}
+.nav-tabs > li > a,
+.nav-tabs > li > a:hover,
+.nav-tabs > li > a:focus{
+    background-color: #996600;
+    border-color: #996600;
+    border-bottom-color: #663300;
+} 
+
+.panel-default {
+    background-color: #996600;
+    border-color: #663300;
+}
+
+.content, header {
+    padding-top:1%;
 }
