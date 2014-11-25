@@ -26,15 +26,27 @@ a:hover{
 }
 
 .nav-tabs {
-    border-bottom-color: #663300;
+    padding: 2px;
+    border: solid 1px;
+    border-radius: 4px;
+    background-color: #996600;
+    border-color: #330000;
 }
+
 .nav-tabs > li > a,
-.nav-tabs > li > a:hover,
 .nav-tabs > li > a:focus{
     background-color: #996600;
+    border:none;
+    border-bottom:solid 3px;
     border-color: #996600;
-    border-bottom-color: #663300;
 } 
+
+.nav-tabs > li > a:hover{
+    background-color: #996600;
+    border: none;
+    border-bottom: solid 3px;
+    border-color:yellow;    
+}
 
 .panel-default {
     background-color: #996600;
