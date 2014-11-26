@@ -11,47 +11,63 @@
     <div class="wrapper">
         <header>
             <div class="container-fluid">
-                <ul class="nav nav-tabs">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="/" role="button" aria-expanded="false">
-                            Sobre Nós <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="/About/">Sobre Nós</a></li>
-                            <li><a href="/Contact/">Contatos</a></li>
+                <div class="row" id="logo">
+                    <div class="col-md-6">
+                        <h1>GreenOak</h1>
+                    </div>
+                    <div class="col-md-6">
+                            <h2>... a sua empresa de confiança!</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <ul class="nav nav-tabs">
+                            <li>
+                                <a href="/">Home</a>
+                            </li>
+                            <li>
+                                <a href="/Contact/">
+                                    Contatos
+                                </a>
+                            </li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                    Parceiros <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Os Nossos Fornecedores</a></li>
+                                    <li><a href="#">Estatísticas</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                    Retalhistas <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Onde Pode Comprar</a></li>
+                                    <li><a href="#">Estatísticas</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                    Documentos <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Consultar Documentos</a></li>
+                                    <li><a href="#">Registar Documentos</a></li>
+                                </ul>
+                            </li>
                         </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                            Parceiros <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Os Nossos Fornecedores</a></li>
-                            <li><a href="#">Estatísticas</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                            Retalhistas <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Onde Pode Comprar</a></li>
-                            <li><a href="#">Estatísticas</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                            Documentos <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Consultar Documentos</a></li>
-                            <li><a href="#">Registar Documentos</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group" id="search">
+                            <input type="text" class="form-control" placeholder="Pesquisa">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
         <div class="container-fluid content">

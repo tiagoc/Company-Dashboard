@@ -1,12 +1,45 @@
-﻿* {
-	margin: 0;
+﻿@font-face{
+    font-family:'Lobster';
+    src: 
+        url('/fonts/Lobster-Regular.ttf')
+        format('truetype');
 }
+
+@font-face{
+    font-family:'Raleway';
+    src: 
+        url('/fonts/Raleway-Regular.ttf')
+        format('truetype');
+}
+
+* {
+    margin: 0;
+}
+
 html, body {
+    font-family:'Raleway',sans-serif;
+    font-size:16px;
 	height: 100%;
     background-image: url('/img/wood_pattern.png');
     background-color: #996600;
     color: #330000;
 }
+h1,h2,h3,h4,h5,h6,li{
+    font-family: 'Lobster',cursive;
+    font-size:18px;
+}
+#logo > div > h1{
+    font-family: 'Lobster',cursive;
+    text-shadow: 1px -1px #888888;
+    font-size:72px;
+}
+
+#logo > div > h2{
+    font-family: 'Lobster',cursive;
+    font-size:36px;
+    text-align:right;
+}
+
 .wrapper {
 	min-height: 100%;
 	height: auto !important; /* This line and the next line are not necessary unless you need IE6 support */
@@ -26,33 +59,56 @@ a:hover{
 }
 
 .nav-tabs {
-    padding: 2px;
-    border: solid 1px;
+    box-shadow: 2px 2px 9px #888888;
+    font-size: 16px;
+    padding: 4px;
     border-radius: 4px;
     background-color: #CD853F;
-    border-color: #330000;
+    border-color: #CD853F;
+}
+
+.nav-tabs >li.open > ul {
+    border-radius:4px;
 }
 
 .nav-tabs > li > a,
+.nav-tabs > li.open >a.dropdown-toggle,
 .nav-tabs > li > a:focus{
     background-color: #CD853F;
     border:none;
-    border-bottom:solid 3px;
+    border-bottom:solid 2px;
+    border-top:solid 2px;
     border-color: #CD853F;
 } 
 
 .nav-tabs > li > a:hover{
     background-color: #CD853F;
     border: none;
-    border-bottom: solid 3px;
-    border-color:yellow;    
+    border-top: solid 2px;
+    border-bottom: solid 2px;
+    border-color: #660000;    
+}
+
+.nav-tabs > li {
+    padding: 2px;
 }
 
 .panel-default {
     background-color: #CD853F;
-    border-color: #663300;
+    border: none;
+    box-shadow: 2px 2px 9px #888888;
 }
 
-.content, header {
+.content{
     padding-top:1%;
+}
+
+img.resize{
+    width:100%; /* you can use % */
+    height: auto;
+}
+
+#search {
+   padding-top:15px;
+   padding-bottom:8px;
 }
