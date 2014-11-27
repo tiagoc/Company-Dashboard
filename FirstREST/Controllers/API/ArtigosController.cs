@@ -9,7 +9,7 @@ using System.Web.Http;
 using FirstREST.Lib_Primavera.Model;
 
 
-namespace FirstREST.Controllers
+namespace FirstREST.Controllers.Api
 {
     public class ArtigosController : ApiController
     {

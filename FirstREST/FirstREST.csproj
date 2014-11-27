@@ -280,13 +280,15 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AboutController.cs" />
-    <Compile Include="Controllers\ArtigosController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\API\ArtigosController.cs" />
+    <Compile Include="Controllers\API\ClientesController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
-    <Compile Include="Controllers\DocCompraController.cs" />
-    <Compile Include="Controllers\DocVendaController.cs" />
+    <Compile Include="Controllers\API\DocCompraController.cs" />
+    <Compile Include="Controllers\API\DocVendaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\API\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -394,6 +396,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Clientes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

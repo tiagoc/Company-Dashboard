@@ -6,10 +6,10 @@ using System.Web.Mvc;
 
 namespace FirstREST.Controllers
 {
-    public class ClientesController : Controller
+    public class AdminController : Controller
     {
         //
-        // GET: /Clientes/
+        // GET: /Admin/
 
         public ActionResult Index()
         {

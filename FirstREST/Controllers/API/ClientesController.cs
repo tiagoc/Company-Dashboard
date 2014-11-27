@@ -2,31 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using FirstREST.Lib_Primavera.Model;
 
-
-namespace FirstREST.Controllers
+namespace FirstREST.Controllers.Api
 {
-    public class DocVendaController : ApiController
+    public class ClientesController : ApiController
     {
         //
-        // GET: /Clientes/
 
-        public IEnumerable<Lib_Primavera.Model.DocVenda> Get()
+        // GET: api/clientes/
+
+        public IEnumerable<Lib_Primavera.Model.Cliente> Get()
         {
-            return Lib_Primavera.Comercial.Encomendas_List();
+            return Lib_Primavera.Comercial.ListaClientes();
         }
 
 
         // GET api/cliente/5    
-        public Lib_Primavera.Model.DocVenda Get(string id)
+        public Cliente Get(string id)
         {
-            Lib_Primavera.Model.DocVenda docvenda = Lib_Primavera.Comercial.Encomenda_Get(id);
-            if (docvenda == null)
+            Lib_Primavera.Model.Cliente cliente = Lib_Primavera.Comercial.GetCliente(id);
+            if (cliente == null)
             {
                 throw new HttpResponseException(
                         Request.CreateResponse(HttpStatusCode.NotFound));
@@ -34,21 +33,21 @@ namespace FirstREST.Controllers
             }
             else
             {
-                return docvenda;
+                return cliente;
             }
         }
 
 
-        public HttpResponseMessage Post(Lib_Primavera.Model.DocVenda dv)
+        public HttpResponseMessage Post(Lib_Primavera.Model.Cliente cliente)
         {
             Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
-            erro = Lib_Primavera.Comercial.Encomendas_New(dv);
+            erro = Lib_Primavera.Comercial.InsereClienteObj(cliente);
 
             if (erro.Erro == 0)
             {
                 var response = Request.CreateResponse(
-                   HttpStatusCode.Created, dv.id);
-                string uri = Url.Link("DefaultApi", new {DocId = dv.id });
+                   HttpStatusCode.Created, cliente);
+                string uri = Url.Link("DefaultApi", new { CodCliente = cliente.CodCliente });
                 response.Headers.Location = new Uri(uri);
                 return response;
             }
@@ -116,5 +115,7 @@ namespace FirstREST.Controllers
             }
 
         }
+
+
     }
 }

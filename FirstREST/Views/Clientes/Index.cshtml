@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Clientes";
+}
+<div class="row" id="loading">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="progress">
+            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                <span class="sr-only">Carregando os clientes</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="clientes" hidden>
+    <table id="tabelaClientes" class="table table-striped" >
+        <thead>
+            <tr>
+                <td>Nome</td>
+                <td>Número de Contribuinte</td>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<script>
+    $.get("/api/Clientes", function (data) {
+        for (Cliente in data) {
+            $("#tabelaClientes tbody").append("<tr><td>" + data[Cliente].NomeCliente + "</td>"
+                                              + "<td>" + data[Cliente].NumContribuinte + "</td></tr>");
+        }
+        $(loading).hide();
+        $(clientes).show();
+    }, "json");
+</script>
