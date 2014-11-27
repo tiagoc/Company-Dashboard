@@ -44,10 +44,10 @@ h1,h2,h3,h4,h5,h6,li{
 	min-height: 100%;
 	height: auto !important; /* This line and the next line are not necessary unless you need IE6 support */
 	height: 100%;
-	margin: 0 auto -30px; /* the bottom margin is the negative value of the footer's height */
+	margin: 0 auto -35px; /* the bottom margin is the negative value of the footer's height */
 }
 .footer, .push {
-	height: 30px; /* .push must be the same height as .footer */
+	height: 35px; /* .push must be the same height as .footer */
 }
 
 a, a:visited{

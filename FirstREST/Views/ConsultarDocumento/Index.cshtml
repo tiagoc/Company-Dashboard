@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Consultar Documentos";
+}
+
+<div class="row" id="loadingVenda">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="progress">
+            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                <span class="sr-only">Carregando documentos venda</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="documentosVenda" hidden>
+    <table id="tabelaVenda" class="table table-striped">
+        <thead>
+            <tr>
+                <td>Documento Venda</td>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<div class="alert alert-danger" role="alert" id="documentosVendaErro" hidden>
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Erro:</span>
+    <span id="message"></span>
+</div>
+<div class="row" id="loadingCompra">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="progress">
+            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                <span class="sr-only">Carregando documentos compra</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="documentosCompra" hidden>
+    <table id="tabelaCompra" class="table table-striped">
+        <thead>
+            <tr>
+                <td>Documento Compra</td>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<div class="alert alert-danger" role="alert" id="documentosCompraErro" hidden>
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Erro:</span>
+    <span id="message"></span>
+</div>
+<script>
+    var requestVenda = $.get("/api/docvenda");
+    requestVenda.success(function (data) {
+        for (Venda in data) {
+
+        }
+        $(documentosVenda).fadeIn();
+        $(loadingVenda).fadeOut();
+    }, 'json');
+    requestVenda.error(function (jqXHR, textStatus, errorThrown) {
+        if (textStatus == 'timeout') {
+            $(loadingVenda).fadeOut();
+            $('#documentosVendaErro #message').append(' O servidor não está a responder');
+            $(documentosVendaErro).fadeIn();
+        }
+
+        if (textStatus == 'error') {
+            $(loadingVenda).fadeOut();
+            $('#documentosVendaErro #message').append('Erro a obter os documentos de venda: ' + errorThrown);
+            $(documentosVendaErro).fadeIn();
+        }
+    });
+
+    var requestCompra = $.get("/api/doccompra");
+    requestCompra.success(function (data) {
+        for (Compra in data) {
+
+        }
+        $(documentosCompra).fadeIn();
+        $(loadingCompra).fadeOut();
+    }, 'json');
+    requestCompra.error(function (jqXHR, textStatus, errorThrown) {
+        if (textStatus == 'timeout') {
+            $(loadingCompra).fadeOut();
+            $('#documentosCompraErro #message').append(' O servidor não está a responder');
+            $(documentosCompraErro).fadeIn();
+        }
+
+        if (textStatus == 'error') {
+            $(loadingCompra).fadeOut();
+            $('#documentosCompraErro #message').append('Erro a obter os documentos de compra: ' + errorThrown);
+            $(documentosCompraErro).fadeIn();
+        }
+    });
+</script>

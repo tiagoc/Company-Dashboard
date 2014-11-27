@@ -23,13 +23,33 @@
         </tbody>
     </table>
 </div>
+<div class="alert alert-danger" role="alert" id="clientesErro" hidden>
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Erro:</span>
+    <span id="message"></span>
+</div>
 <script>
-    $.get("/api/Clientes", function (data) {
+    var request = $.get("/api/clientes");
+    request.success(function (data) {
         for (Cliente in data) {
-            $("#tabelaClientes tbody").append("<tr><td>" + data[Cliente].NomeCliente + "</td>"
-                                              + "<td>" + data[Cliente].NumContribuinte + "</td></tr>");
+            if (data[Cliente].CodCliente != "VD")
+                $("#tabelaClientes tbody").append("<tr><td>" + data[Cliente].NomeCliente + "</td>"
+                                                  + "<td>" + data[Cliente].NumContribuinte + "</td></tr>");
         }
-        $(loading).hide();
-        $(clientes).show();
-    }, "json");
+        $(loading).fadeOut();
+        $(clientes).fadeIn();
+    }, 'json');
+    request.error(function (jqXHR, textStatus, errorThrown) {
+        if (textStatus == 'timeout') {
+            $(loading).fadeOut();
+            $('#clientesErro #message').append(' O servidor não está a responder');
+            $(clientesErro).fadeIn();
+        }
+
+        if (textStatus == 'error') {
+            $(loading).fadeOut();
+            $('#clientesErro #message').append('Erro a obter os clientes: ' + errorThrown);
+            $(clientesErro).fadeIn();
+        }
+    });
 </script>
