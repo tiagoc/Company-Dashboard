@@ -29,7 +29,7 @@ namespace FirstREST.Lib_Primavera
             List<Model.Cliente> listClientes = new List<Model.Cliente>();
 
 
-            if (PriEngine.InitializeCompany("BELAFLOR", "", "") == true)
+            if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
 
                 //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
@@ -64,7 +64,7 @@ namespace FirstREST.Lib_Primavera
 
             Model.Cliente myCli = new Model.Cliente();
 
-            if (PriEngine.InitializeCompany("BELAFLOR", "", "") == true)
+            if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
 
                 if (PriEngine.Engine.Comercial.Clientes.Existe(codCliente) == true)
@@ -98,7 +98,7 @@ namespace FirstREST.Lib_Primavera
             try
             {
 
-                if (PriEngine.InitializeCompany("BELAFLOR", "", "") == true)
+                if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
                 {
 
                     if (PriEngine.Engine.Comercial.Clientes.Existe(cliente.CodCliente) == false)
@@ -154,7 +154,7 @@ namespace FirstREST.Lib_Primavera
             try
             {
 
-                if (PriEngine.InitializeCompany("BELAFLOR", "", "") == true)
+                if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
                 {
                     if (PriEngine.Engine.Comercial.Clientes.Existe(codCliente) == false)
                     {
@@ -199,7 +199,7 @@ namespace FirstREST.Lib_Primavera
 
             try
             {
-                if (PriEngine.InitializeCompany("BELAFLOR", "", "") == true)
+                if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
                 {
 
                     myCli.set_Cliente(cli.CodCliente);
@@ -264,7 +264,7 @@ namespace FirstREST.Lib_Primavera
             GcpBEArtigo objArtigo = new GcpBEArtigo();
             Model.Artigo myArt = new Model.Artigo();
 
-            if (PriEngine.InitializeCompany("BELAFLOR", "", "") == true)
+            if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
 
                 if (PriEngine.Engine.Comercial.Artigos.Existe(codArtigo) == false)
@@ -297,7 +297,7 @@ namespace FirstREST.Lib_Primavera
             Model.Artigo art = new Model.Artigo();
             List<Model.Artigo> listArts = new List<Model.Artigo>();
 
-            if (PriEngine.InitializeCompany("BELAFLOR", "", "") == true)
+            if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
 
                 objList = PriEngine.Engine.Comercial.Artigos.LstArtigos();
@@ -340,7 +340,7 @@ namespace FirstREST.Lib_Primavera
 
             try
             {
-                if (PriEngine.InitializeCompany("BELAFLOR", "sa", "123456") == true)
+                if (PriEngine.InitializeCompany("GREENOAK", "sa", "123456") == true)
                 {
                 
 
@@ -410,7 +410,7 @@ namespace FirstREST.Lib_Primavera
             Model.LinhaDocCompra lindc = new Model.LinhaDocCompra();
             List<Model.LinhaDocCompra> listlindc = new List<Model.LinhaDocCompra>(); 
 
-            if (PriEngine.InitializeCompany("BELAFLOR", "", "") == true)
+            if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
                 objListCab = PriEngine.Engine.Consulta("SELECT id, NumDocExterno, Entidade, DataDoc, NumDoc, TotalMerc, Serie From CabecCompras where TipoDoc='VGR'");
                 while (!objListCab.NoFim())
@@ -470,7 +470,7 @@ namespace FirstREST.Lib_Primavera
 
             try
             {
-                if (PriEngine.InitializeCompany("BELAFLOR", "", "") == true)
+                if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
                 {
                     // Atribui valores ao cabecalho do doc
                     //myEnc.set_DataDoc(dv.Data);
@@ -533,7 +533,7 @@ namespace FirstREST.Lib_Primavera
             
             try
             {
-                if (PriEngine.InitializeCompany("BELAFLOR", "", "") == true)
+                if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
                 {
                     // Atribui valores ao cabecalho do doc
                     //myEnc.set_DataDoc(dv.Data);
@@ -590,7 +590,7 @@ namespace FirstREST.Lib_Primavera
             List<Model.LinhaDocVenda> listlindv = new
             List<Model.LinhaDocVenda>();
 
-            if (PriEngine.InitializeCompany("BELAFLOR", "", "") == true)
+            if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
                 objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL'");
                 while (!objListCab.NoFim())
@@ -641,7 +641,7 @@ namespace FirstREST.Lib_Primavera
             Model.LinhaDocVenda lindv = new Model.LinhaDocVenda();
             List<Model.LinhaDocVenda> listlindv = new List<Model.LinhaDocVenda>();
 
-            if (PriEngine.InitializeCompany("BELAFLOR", "", "") == true)
+            if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
                  
                 string st = "SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL' and NumDoc='" + numdoc + "'";

@@ -283,6 +283,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\API\ArtigosController.cs" />
     <Compile Include="Controllers\API\ClientesController.cs" />
+    <Compile Include="Controllers\ArtigosController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ConsultarDocumentoController.cs" />
     <Compile Include="Controllers\ContactController.cs" />
@@ -400,6 +401,7 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Clientes\Index.cshtml" />
     <Content Include="Views\ConsultarDocumento\Index.cshtml" />
+    <Content Include="Views\Artigos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
