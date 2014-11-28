@@ -412,7 +412,7 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
-                objListCab = PriEngine.Engine.Consulta("SELECT id, NumDocExterno, Entidade, DataDoc, NumDoc, TotalMerc, Serie From CabecCompras where TipoDoc='VGR'");
+                objListCab = PriEngine.Engine.Consulta("SELECT id, NumDocExterno, Entidade, DataDoc, NumDoc, TotalMerc, Serie From CabecCompras"); //where TipoDoc='VGR'
                 while (!objListCab.NoFim())
                 {
                     dc = new Model.DocCompra();
@@ -592,7 +592,7 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
-                objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc where TipoDoc='ECL'");
+                objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc"); //where TipoDoc='ECL'
                 while (!objListCab.NoFim())
                 {
                     dv = new Model.DocVenda();

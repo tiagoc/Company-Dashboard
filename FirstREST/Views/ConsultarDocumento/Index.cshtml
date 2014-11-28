@@ -18,7 +18,7 @@
                 <td>Documento Venda</td>
             </tr>
         </thead>
-        <tbody></tbody>
+        <tbody id="doc"></tbody>
     </table>
 </div>
 <div class="alert alert-danger" role="alert" id="documentosVendaErro" hidden>
@@ -53,8 +53,13 @@
 <script>
     var requestVenda = $.get("/api/docvenda");
     requestVenda.success(function (data) {
+        console.log(data);
         for (Venda in data) {
-
+            $("#tabelaVenda #doc").append("<tr><td>" + data[Venda].Data + "</td>" + "<td>" + data[Venda].Entidade + "</td>" + "<td>" + data[Venda].TotalMerc + "</td></tr>");
+            $("#tabelaVenda #doc").append("<tr><td></td><td colspan='2'><table class='table table-striped'><tbody id='docSec'></tbody></table></td>" + "</tr>");
+            for (Doc in data[Venda].LinhasDoc) {
+                $("#docSec").append("<tr>" + "<td>" + data[Venda].LinhasDoc[Doc].CodArtigo + "</td>" + "<td>" + data[Venda].LinhasDoc[Doc].CodArtigo + "</td>" + "<td>" + data[Venda].LinhasDoc[Doc].Quantidade + "<td>" + data[Venda].LinhasDoc[Doc].TotalLiquido + "</td>" + "</td>" + "</tr>");
+            }
         }
         $(documentosVenda).fadeIn();
         $(loadingVenda).fadeOut();
@@ -75,6 +80,7 @@
 
     var requestCompra = $.get("/api/doccompra");
     requestCompra.success(function (data) {
+        console.log(data);
         for (Compra in data) {
 
         }
