@@ -40,7 +40,12 @@ h1,h2,h3,h4,h5,h6,li{
     text-align:right;
 }
 
+#logo {
+    padding-bottom:1%;
+}
+
 .wrapper {
+
 	min-height: 100%;
 	height: auto !important; /* This line and the next line are not necessary unless you need IE6 support */
 	height: 100%;
@@ -58,22 +63,21 @@ a:hover{
     color: #660000;
 }
 
-.nav-tabs {
+.nav-pills {
     box-shadow: 2px 2px 9px #888888;
     font-size: 16px;
-    padding: 4px;
     border-radius: 4px;
     background-color: #CD853F;
     border-color: #CD853F;
 }
 
-.nav-tabs >li.open > ul {
+.nav-pills >li.open > ul {
     border-radius:4px;
 }
 
-.nav-tabs > li > a,
-.nav-tabs > li.open >a.dropdown-toggle,
-.nav-tabs > li > a:focus{
+.nav-pills > li > a,
+.nav-pills > li.open >a.dropdown-toggle,
+.nav-pills > li > a:focus{
     background-color: #CD853F;
     border:none;
     border-bottom:solid 2px;
@@ -81,7 +85,7 @@ a:hover{
     border-color: #CD853F;
 } 
 
-.nav-tabs > li > a:hover{
+.nav-pills > li > a:hover{
     background-color: #CD853F;
     border: none;
     border-top: solid 2px;
@@ -89,7 +93,7 @@ a:hover{
     border-color: #660000;    
 }
 
-.nav-tabs > li {
+.nav-pills > li {
     padding: 2px;
 }
 
@@ -100,7 +104,6 @@ a:hover{
 }
 
 .content{
-    padding-top:1%;
 }
 
 img.resize{
