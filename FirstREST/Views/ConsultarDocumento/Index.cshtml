@@ -56,9 +56,9 @@
         console.log(data);
         for (Venda in data) {
             $("#tabelaVenda #doc").append("<tr><td>" + data[Venda].Data + "</td>" + "<td>" + data[Venda].Entidade + "</td>" + "<td>" + data[Venda].TotalMerc + "</td></tr>");
-            $("#tabelaVenda #doc").append("<tr><td></td><td colspan='2'><table class='table table-striped'><tbody id='docSec'></tbody></table></td>" + "</tr>");
+            $("#tabelaVenda #doc").append("<tr><td></td><td colspan='2'><table class='table table-striped'><tbody id='docSec" + Venda + "'></tbody></table></td>" + "</tr>");
             for (Doc in data[Venda].LinhasDoc) {
-                $("#docSec").append("<tr>" + "<td>" + data[Venda].LinhasDoc[Doc].CodArtigo + "</td>" + "<td>" + data[Venda].LinhasDoc[Doc].CodArtigo + "</td>" + "<td>" + data[Venda].LinhasDoc[Doc].Quantidade + "<td>" + data[Venda].LinhasDoc[Doc].TotalLiquido + "</td>" + "</td>" + "</tr>");
+                $("#docSec" + Venda).append("<tr>" + "<td>" + data[Venda].LinhasDoc[Doc].CodArtigo + "</td>" + "<td>" + data[Venda].LinhasDoc[Doc].CodArtigo + "</td>" + "<td>" + data[Venda].LinhasDoc[Doc].Quantidade + "<td>" + data[Venda].LinhasDoc[Doc].TotalLiquido + "</td>" + "</td>" + "</tr>");
             }
         }
         $(documentosVenda).fadeIn();

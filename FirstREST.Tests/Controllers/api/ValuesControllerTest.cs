@@ -6,9 +6,9 @@ using System.Text;
 using System.Web.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FirstREST;
-using FirstREST.Controllers;
+using FirstREST.Controllers.Api;
 
-namespace FirstREST.Tests.Controllers
+namespace FirstREST.Tests.Controllers.api
 {
     [TestClass]
     public class ValuesControllerTest
