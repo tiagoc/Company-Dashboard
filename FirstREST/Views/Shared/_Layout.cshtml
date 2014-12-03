@@ -21,55 +21,43 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2">
-                        <ul class="nav nav-pills nav-stacked">
-                            <li>
-                                <a href="/">Home</a>
-                            </li>
-                            <li>
-                                <a href="/Contact/">
-                                    Contatos
-                                </a>
-                            </li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                    Parceiros <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Os Nossos Fornecedores</a></li>
-                                    <li><a href="#">Estatísticas</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                    Retalhistas <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Onde Pode Comprar</a></li>
-                                    <li><a href="#">Estatísticas</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                    Documentos <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="/ConsultarDocumento/">Consultar Documentos</a></li>
-                                    <li><a href="#">Registar Documentos</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="/Admin/">Área de Administração</a>
-                            </li>
-                            <li>
-                                <a href="/Clientes/">Clientes</a>
-                            </li>
-                            <li>
-                                <a href="/Artigos/">Artigos</a>
-                            </li>
-                        </ul>
+                    <div class="col-md-3 hidden-sm hidden-xs">
+                        <div class="row container-fluid">
+                            <ul class="nav">
+                                <li><a href="/">Home</a></li>
+                                <li><a href="/Contact/">Contatos</a></li>
+                                <li><a href="#">Fornecedores</a></li>
+                                <li><a href="/Clientes">Clientes</a></li>
+                                <li><a href="#">Estatísticas</a></li>
+                                <li><a href="/ConsultarDocumento/">Consultar Documentos</a></li>
+                                <li><a href="#">Registar Documentos</a></li>
+                                <li><a href="/Artigos">Artigos</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="col-md-10">
+                    <div class="col-xs-10 col-xs-offset-1 hidden-md hidden-lg">
+                        <div class="row container-fluid" id="hidden-navigation-small">
+                            <select class="form-control" id="navigation-small">
+                                <option disabled selected>Menu</option>
+                                <option disabled>-------</option>
+                                <option value="/">Home</option>
+                                <option value="/Contact/">Contatos</option>
+                                <option value="#">Fornecedores</option>
+                                <option value="/Clientes">Clientes</option>
+                                <option value="#">Estatísticas</option>
+                                <option value="/ConsultarDocumento/">Consultar Documentos</option>
+                                <option value="#">Registar Documentos</option>
+                                <option value="/Artigos">Artigos</option>
+                            </select>
+                        
+                            <script>
+                                document.getElementById("navigation-small").onchange = function() {
+                                        window.location.href = this.value;
+                                };
+                            </script>
+                        </div>
+                    </div>
+                    <div class="col-md-9 col-xs-12">
                         <div class="container-fluid content">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
