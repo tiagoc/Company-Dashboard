@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Fornecedores";
+}
+<div class="row" id="loading">
+    <div class="col-md-6 col-md-offset-3">
+        <div class="progress">
+            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                <span class="sr-only">Carregando os fornecedores</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="fornecedores" hidden>
+    <table id="tabelaFornecedores" class="table table-striped">
+        <thead>
+            <tr>
+                <td>Nome</td>
+                <td>Número de Contribuinte</td>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<div class="alert alert-danger" role="alert" id="clientesErro" hidden>
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Erro:</span>
+    <span id="message"></span>
+</div>
+<script>
+    var request = $.get("/api/fornecedores");
+    request.success(function (data) {
+        for (Fornecedor in data) {
+            if (data[Fornecedor].CodFornecedor != "FVD")
+                $("#tabelaFornecedores tbody").append("<tr><td>" + data[Fornecedor].NomeFornecedor + "</td>"
+                                                  + "<td>" + data[Fornecedor].NumContribuinte + "</td>"
+                                                  + "<td>" + data[Fornecedor].Morada + "</td>"
+                                                  + "<td>" + data[Fornecedor].Local + "</td>" +"</tr>");
+        }
+        $(loading).fadeOut();
+        $(clientes).fadeIn();
+    }, 'json');
+    request.error(function (jqXHR, textStatus, errorThrown) {
+        if (textStatus == 'timeout') {
+            $(loading).fadeOut();
+            $('#clientesErro #message').append(' O servidor não está a responder');
+            $(clientesErro).fadeIn();
+        }
+
+        if (textStatus == 'error') {
+            $(loading).fadeOut();
+            $('#clientesErro #message').append('Erro a obter os clientes: ' + errorThrown);
+            $(clientesErro).fadeIn();
+        }
+    });
+</script>

@@ -16,7 +16,74 @@ namespace FirstREST.Lib_Primavera
     public class Comercial
     {
 
+        # region Fornecedor
+        public static List<Model.Fornecedor> ListaFornecedores()
+        {
+            ErpBS objMotor = new ErpBS();
 
+            StdBELista objList;
+
+            Model.Fornecedor forn = new Model.Fornecedor();
+            List<Model.Fornecedor> listFornecedores = new List<Model.Fornecedor>();
+
+
+            if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
+            {
+
+
+                objList = PriEngine.Engine.Consulta("SELECT Fornecedor, Nome, Morada, Local, Moeda, NumContrib as NumContribuinte FROM FORNECEDORES");
+
+                while (!objList.NoFim())
+                {
+                    forn = new Model.Fornecedor();
+                    forn.CodFornecedor = objList.Valor("Fornecedor");
+                    forn.NomeFornecedor = objList.Valor("Nome");
+                    forn.Moeda = objList.Valor("Moeda");
+                    forn.NumContribuinte = objList.Valor("NumContribuinte");
+                    forn.Morada = objList.Valor("Morada");
+                    forn.Local = objList.Valor("Local");
+                    listFornecedores.Add(forn);
+                    objList.Seguinte();
+
+                }
+
+                return listFornecedores;
+            }
+            else
+                return null;
+        }
+
+        public static Lib_Primavera.Model.Fornecedor GetFornecedor(string codFornecedor)
+        {
+            ErpBS objMotor = new ErpBS();
+
+            GcpBEFornecedor objForn = new GcpBEFornecedor();
+
+
+            Model.Fornecedor myForn = new Model.Fornecedor();
+
+            if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
+            {
+
+                if (PriEngine.Engine.Comercial.Fornecedores.Existe(codFornecedor) == true)
+                {
+                    objForn = PriEngine.Engine.Comercial.Fornecedores.Edita(codFornecedor);
+                    myForn.CodFornecedor = objForn.get_Fornecedor();
+                    myForn.NomeFornecedor = objForn.get_Nome();
+                    myForn.Moeda = objForn.get_Moeda();
+                    myForn.NumContribuinte = objForn.get_NumContribuinte();
+                    return myForn;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+                return null;
+        }
+
+        #endregion Fornecedor
         # region Cliente
 
         public static List<Model.Cliente> ListaClientes()

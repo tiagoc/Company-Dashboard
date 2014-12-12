@@ -283,6 +283,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\API\ArtigosController.cs" />
     <Compile Include="Controllers\API\ClientesController.cs" />
+    <Compile Include="Controllers\API\FornecedoresController.cs" />
     <Compile Include="Controllers\ArtigosController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ConsultarDocumentoController.cs" />
@@ -290,12 +291,14 @@
     <Compile Include="Controllers\API\DocCompraController.cs" />
     <Compile Include="Controllers\API\DocVendaController.cs" />
     <Compile Include="Controllers\EstatisticasController.cs" />
+    <Compile Include="Controllers\FornecedoresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\API\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Lib_Primavera\Comercial.cs" />
+    <Compile Include="Lib_Primavera\Model\Fornecedor.cs" />
     <Compile Include="Lib_Primavera\Model\Artigo.cs" />
     <Compile Include="Lib_Primavera\Model\Cliente.cs" />
     <Compile Include="Lib_Primavera\Model\DocCompra.cs" />
@@ -404,6 +407,7 @@
     <Content Include="Views\ConsultarDocumento\Index.cshtml" />
     <Content Include="Views\Artigos\Index.cshtml" />
     <Content Include="Views\Estatisticas\Index.cshtml" />
+    <Content Include="Views\Fornecedores\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
