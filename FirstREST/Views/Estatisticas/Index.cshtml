@@ -2,98 +2,81 @@
     ViewBag.Title = "Estatísticas";
 }
 <script>
-    rf.StandaloneDashboard(function (db) {
-        var numeroVendas = 0;
-        var numeroCompras = 0;
-        var precoVendas = 0;
-        var precoCompras = 0;
-        var dividaVendas = -4545;
-        var pagoVendas = 3000;
-        var pagoCompras = 3000;
-        var dividaCompras = -3242;
-        var requestVenda = $.ajax({
-            url: "/api/docvenda",
-            type: 'GET',
-            async: false,
-            cache: false,
-            timeout: 30000,
-            error: function () {
-                return true;
-            },
-            success: function (data) {
-                numeroVendas = data.length;
-                for (index in data) {
-                    precoVendas = precoVendas + data[index].TotalMerc;
-                }
+    // Load the Visualization API and the piechart package.
+    google.load('visualization', '1.0', {'packages':['corechart']});
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(compras_vendas);
+
+    var numeroVendas = 0;
+    var numeroCompras = 0;
+    var precoVendas = 0;
+    var precoCompras = 0;
+    var dividaVendas = -4545;
+    var pagoVendas = 3000;
+    var pagoCompras = 3000;
+    var dividaCompras = -3242;
+
+    var requestVenda = $.ajax({
+        url: "/api/docvenda",
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
+        error: function () {
+            return true;
+        },
+        success: function (data) {
+            numeroVendas = data.length;
+            for (index in data) {
+                precoVendas = precoVendas + data[index].TotalMerc;
             }
-        });
-        var requestCompra = $.ajax({
-            url: "/api/doccompra",
-            type: 'GET',
-            async: false,
-            cache: false,
-            timeout: 30000,
-            error: function () {
-                return true;
-            },
-            success: function (data) {
-                numeroCompras = data.length;
-                for (index in data) {
-                    precoCompras = precoCompras + data[index].TotalMerc;
-                }
+        }
+    });
+    var requestCompra = $.ajax({
+        url: "/api/doccompra",
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
+        error: function () {
+            return true;
+        },
+        success: function (data) {
+            numeroCompras = data.length;
+            for (index in data) {
+                precoCompras = precoCompras + data[index].TotalMerc;
             }
+        }
+    });
+
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function compras_vendas() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Compras/Vendas');
+        data.addColumn('number', 'Quantidade');
+        data.addRows([
+          ['Vendas', precoVendas],
+          ['Compras', (-1)*precoCompras]
+        ]);
+
+        // Set chart options
+        var options = {
+            'title': 'Total Monetário em Faturas',
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+
+        $(window).resize(function () {
+            chart.draw(data, options);
         });
-
-        var vendas = new KPIComponent();
-        vendas.setDimensions(2, 4);
-        vendas.setCaption("Número Vendas");
-        vendas.setValue(numeroVendas);
-        db.addComponent(vendas);
-
-        var compras = new KPIComponent();
-        compras.setDimensions(2, 4);
-        compras.setCaption("Número Compras");
-        compras.setValue(numeroCompras);
-        db.addComponent(compras);
-
-        var compras_vendas_gastos = new ChartComponent();
-        compras_vendas_gastos.setDimensions(8, 4);
-        compras_vendas_gastos.setCaption("Total monetário de vendas e compras");
-        compras_vendas_gastos.setLabels(["Vendas", "Compras"]);
-        compras_vendas_gastos.setPieValues([precoVendas, -1*precoCompras]);
-        compras_vendas_gastos.onItemClick(function (obj) {
-            console.log(obj);
-        });
-        db.addComponent(compras_vendas_gastos);
-
-
-        var saldos_faturas = new GaugeComponent();
-        saldos_faturas.setDimensions(4, 4);
-        saldos_faturas.setCaption('Saldo');
-        saldos_faturas.setValue(dividaCompras + dividaVendas + pagoCompras + pagoVendas, { numberPrefix: '€' });
-        saldos_faturas.setLimits(dividaCompras + dividaVendas, pagoCompras + pagoVendas);
-        db.addComponent(saldos_faturas);
-
-        var compras_vendas_dividas = new ChartComponent();
-        compras_vendas_dividas.setDimensions(4, 4);
-        compras_vendas_dividas.setCaption("Total monetário de dividas");
-        compras_vendas_dividas.setLabels(["Vendas", "Compras"]);
-        compras_vendas_dividas.setPieValues([dividaVendas, dividaCompras]);
-        compras_vendas_dividas.onItemClick(function (obj) {
-            console.log(obj);
-        });
-        db.addComponent(compras_vendas_dividas);
-
-        var compras_vendas_pago = new ChartComponent();
-        compras_vendas_pago.setDimensions(4, 4);
-        compras_vendas_pago.setCaption("Total monetário pago");
-        compras_vendas_pago.setLabels(["Vendas", "Compras"]);
-        compras_vendas_pago.setPieValues([pagoVendas, pagoCompras]);
-        compras_vendas_pago.onItemClick(function (obj) {
-            console.log(obj);
-        });
-        db.addComponent(compras_vendas_pago);
-      
-    })
+    }
+   
 </script>
-<div id="dbTarget" class="rf-lg"></div>
+<div id="chart_div"></div>
