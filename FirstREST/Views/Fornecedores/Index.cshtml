@@ -17,12 +17,14 @@
             <tr>
                 <td>Nome</td>
                 <td>Número de Contribuinte</td>
+                <td>Morada</td>
+                <td>Localidade</td>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
 </div>
-<div class="alert alert-danger" role="alert" id="clientesErro" hidden>
+<div class="alert alert-danger" role="alert" id="fornecedoresErro" hidden>
     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
     <span class="sr-only">Erro:</span>
     <span id="message"></span>
@@ -38,19 +40,19 @@
                                                   + "<td>" + data[Fornecedor].Local + "</td>" +"</tr>");
         }
         $(loading).fadeOut();
-        $(clientes).fadeIn();
+        $(fornecedores).fadeIn();
     }, 'json');
     request.error(function (jqXHR, textStatus, errorThrown) {
         if (textStatus == 'timeout') {
             $(loading).fadeOut();
-            $('#clientesErro #message').append(' O servidor não está a responder');
-            $(clientesErro).fadeIn();
+            $('#fornecedoresErro #message').append(' O servidor não está a responder');
+            $(fornecedoresErro).fadeIn();
         }
 
         if (textStatus == 'error') {
             $(loading).fadeOut();
-            $('#clientesErro #message').append('Erro a obter os clientes: ' + errorThrown);
-            $(clientesErro).fadeIn();
+            $('#fornecedoresErro #message').append('Erro a obter os fornecedores: ' + errorThrown);
+            $(fornecedoresErro).fadeIn();
         }
     });
 </script>
