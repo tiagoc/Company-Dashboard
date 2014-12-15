@@ -17,6 +17,39 @@ namespace FirstREST.Lib_Primavera
     {
 
         # region Fornecedor
+
+        public static List<Dictionary<string, string>> ListaTopArtigoComprado()
+        {
+            ErpBS objMotor = new ErpBS();
+
+            StdBELista objList;
+            List<Dictionary<string, string>> listTopArts = new List<Dictionary<string, string>>();
+
+
+
+            if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
+            {
+
+
+                objList = PriEngine.Engine.Consulta("SELECT dbo.LinhasCompras.Descricao, SUM(dbo.LinhasCompras.Quantidade) AS Soma FROM dbo.CabecCompras INNER JOIN dbo.LinhasCompras ON dbo.CabecCompras.Id = dbo.LinhasCompras.IdCabecCompras GROUP BY dbo.LinhasCompras.Descricao");
+                while (!objList.NoFim())
+                {
+                    Dictionary<string, string> art = new Dictionary<string, string>();
+                    double soma = objList.Valor("Soma");
+                    string somaString = soma.ToString();
+                    art["Descricao"] = objList.Valor("Descricao");
+                    art["Soma"] = somaString;
+                    listTopArts.Add(art);
+                    objList.Seguinte();
+
+                }
+
+                return listTopArts;
+            }
+            else
+                return null;
+        }
+
         public static List<Model.Fornecedor> ListaFornecedores()
         {
             ErpBS objMotor = new ErpBS();
@@ -99,7 +132,6 @@ namespace FirstREST.Lib_Primavera
             if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
 
-                //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
 
                 objList = PriEngine.Engine.Consulta("SELECT Cliente, Nome, Moeda, NumContrib as NumContribuinte FROM  CLIENTES");
 
@@ -121,6 +153,41 @@ namespace FirstREST.Lib_Primavera
             else
                 return null;
         }
+
+        public static List<Dictionary<string, string>> ListaTopArtigoVendido()
+        {
+            ErpBS objMotor = new ErpBS();
+
+            StdBELista objList;
+            List<Dictionary<string, string>> listTopArts = new List<Dictionary<string, string>>();
+           
+
+
+            if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
+            {
+
+                //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
+
+                objList = PriEngine.Engine.Consulta("SELECT dbo.LinhasDoc.Descricao, SUM(dbo.LinhasDoc.Quantidade) AS Soma FROM dbo.CabecDoc INNER JOIN dbo.LinhasDoc ON dbo.CabecDoc.Id = dbo.LinhasDoc.IdCabecDoc GROUP BY dbo.LinhasDoc.Descricao");
+                while (!objList.NoFim())
+                {
+                    Dictionary<string, string> art = new Dictionary<string, string>();
+                    double soma = objList.Valor("Soma");
+                    string somaString = soma.ToString();
+                    art["Descricao"] = objList.Valor("Descricao");
+                    art["Soma"] = somaString;
+                    listTopArts.Add(art);
+                    objList.Seguinte();
+
+                }
+
+                return listTopArts;
+            }
+            else
+                return null;
+        }
+
+
 
         public static Lib_Primavera.Model.Cliente GetCliente(string codCliente)
         {

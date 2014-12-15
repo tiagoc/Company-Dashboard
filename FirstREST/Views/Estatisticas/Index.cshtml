@@ -6,8 +6,11 @@
     google.load('visualization', '1.0', {'packages':['corechart']});
 
     // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(fornecedores);
     google.setOnLoadCallback(compras_vendas);
-
+    google.setOnLoadCallback(clientes);
+    google.setOnLoadCallback(topVendas);
+    google.setOnLoadCallback(topCompras);
     var numeroVendas = 0;
     var numeroCompras = 0;
     var precoVendas = 0;
@@ -16,7 +19,94 @@
     var pagoVendas = 3000;
     var pagoCompras = 3000;
     var dividaCompras = -3242;
+    
+    var comprasEfetuadas = [];
+    var vendasEfetuadas = [];
+    
+    var topArtVendidos = [];
+    var topArtComprados = [];
 
+
+    var requestTopArtComprados = $.ajax({
+        url: "/api/artigosmaiscomprados",
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
+        error: function () {
+            return true;
+        },
+        success: function (data) {
+            for (index in data) {
+                topArtComprados.push(data[index]);
+            }
+        }
+
+    });
+
+    var requestTopArtVendidos = $.ajax({
+        url: "/api/artigosmaisvendidos",
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
+        error: function () {
+            return true;
+        },
+        success: function (data) {
+            for (index in data) {
+                topArtVendidos.push(data[index]);
+            }
+        }
+
+    });
+
+    var requestCompras = $.ajax({
+        url: "/api/doccompra",
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
+        error: function () {
+            return true;
+        },
+        success: function (data) {
+            for (index in data) {
+                for (index1 in data[index].LinhasDoc) {
+                    var efetuada = { entidade: '', qtd: 0, art: '' }
+                    efetuada.entidade = data[index].Entidade;
+                    efetuada.qtd = data[index].LinhasDoc[index1].Quantidade;
+                    efetuada.art = data[index].LinhasDoc[index1].DescArtigo;
+                    comprasEfetuadas.push(efetuada);
+                }
+                
+            }
+        }
+
+    });
+    
+    var requestVendas = $.ajax({
+        url: "/api/docvenda",
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
+        error: function () {
+            return true;
+        },
+        success: function (data) {
+            for (index in data) {
+                for (index1 in data[index].LinhasDoc) {
+                    var efetuada = { entidade: '', qtd: 0, art: '' }
+                    efetuada.entidade = data[index].Entidade;
+                    efetuada.qtd = data[index].LinhasDoc[index1].Quantidade;
+                    efetuada.art = data[index].LinhasDoc[index1].DescArtigo;
+                    vendasEfetuadas.push(efetuada);
+                }
+            }
+        }
+
+    });
     var requestVenda = $.ajax({
         url: "/api/docvenda",
         type: 'GET',
@@ -70,13 +160,114 @@
         };
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div1'));
         chart.draw(data, options);
 
         $(window).resize(function () {
             chart.draw(data, options);
         });
     }
+
+    function topVendas() {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Artigo')
+        data.addColumn('number', 'Quantidade');
+        for (index in topArtVendidos) {
+            data.addRows([
+                [topArtVendidos[index].Descricao, parseFloat(topArtVendidos[index].Soma)]
+            ]);
+        }
+        // Set chart options
+        var options = {
+            'title': 'Top de artigos vendidos',
+            pieHole: 0.4,
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div4'));
+        chart.draw(data, options);
+        $(window).resize(function () {
+            chart.draw(data, options);
+        });
+    }
+
+    function topCompras() {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Artigo')
+        data.addColumn('number', 'Quantidade');
+        for (index in topArtComprados) {
+            data.addRows([
+                [topArtComprados[index].Descricao, (-1)*parseFloat(topArtComprados[index].Soma)]
+            ]);
+        }
+        // Set chart options
+        var options = {
+            'title': 'Top de artigos comprados',
+            pieHole: 0.4,
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div5'));
+        chart.draw(data, options);
+        $(window).resize(function () {
+            chart.draw(data, options);
+        });
+    }
+
+    function fornecedores() {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Fornecedor - Artigo ')
+        data.addColumn('number', 'Quantidade');
+        for (index in comprasEfetuadas) {
+            data.addRows([
+                [comprasEfetuadas[index].entidade + " - " +comprasEfetuadas[index].art, (-1) * comprasEfetuadas[index].qtd]
+            ]);
+        }
+        // Set chart options
+        var options = {
+            'title': 'Compras efetuadas a Fornecedores',
+            pieHole: 0.4,
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div2'));
+        chart.draw(data, options);
+        $(window).resize(function () {
+            chart.draw(data, options);
+        });
+    }
+
+    function clientes() {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Cliente - Artigo ')
+        data.addColumn('number', 'Quantidade');
+        for (index in vendasEfetuadas) {
+            data.addRows([
+                [vendasEfetuadas[index].entidade + " - " + vendasEfetuadas[index].art,vendasEfetuadas[index].qtd]
+            ]);
+        }
+        // Set chart options
+        var options = {
+            'title': 'Vendas efetuadas a Clientes',
+            pieHole: 0.4,
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart_div3'));
+        chart.draw(data, options);
+        $(window).resize(function () {
+            chart.draw(data, options);
+        });
+    }
    
 </script>
-<div id="chart_div"></div>
+
+<div id="chart_div1"></div>
+<div id="chart_div2"></div>
+<div id="chart_div3"></div>
+<div id="chart_div4"></div>
+<div id="chart_div5"></div>

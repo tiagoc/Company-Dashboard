@@ -282,6 +282,8 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\API\ArtigosController.cs" />
+    <Compile Include="Controllers\API\ArtigosMaisCompradosController.cs" />
+    <Compile Include="Controllers\API\ArtigosMaisVendidosController.cs" />
     <Compile Include="Controllers\API\ClientesController.cs" />
     <Compile Include="Controllers\API\FornecedoresController.cs" />
     <Compile Include="Controllers\ArtigosController.cs" />
