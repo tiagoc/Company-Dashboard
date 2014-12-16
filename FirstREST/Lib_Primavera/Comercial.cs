@@ -457,8 +457,81 @@ namespace FirstREST.Lib_Primavera
 
         }
 
+        public static List<Model.Pagamento> ListarPagamentosPendentes()
+        {
+            ErpBS objMotor = new ErpBS();
+
+            StdBELista objList;
+
+            Model.Pagamento pag = new Model.Pagamento();
+            List<Model.Pagamento> listPags = new List<Model.Pagamento>();
+
+            if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
+            {
+
+                objList = PriEngine.Engine.Consulta("SELECT dbo.Pendentes.ValorTotal, dbo.Pendentes.ValorPendente, dbo.Fornecedores.Fornecedor, dbo.Fornecedores.Nome FROM dbo.Pendentes INNER JOIN dbo.Fornecedores ON dbo.Pendentes.Entidade = dbo.Fornecedores.Fornecedor");
 
 
+                while (!objList.NoFim())
+                {
+                    pag = new Model.Pagamento();
+                    pag.Entidade = objList.Valor("Fornecedor");
+                    pag.Nome = objList.Valor("Nome");
+                    pag.ValorPendente = objList.Valor("ValorPendente");
+                    pag.ValorTotal = objList.Valor("ValorTotal");
+
+                    listPags.Add(pag);
+                    objList.Seguinte();
+                }
+
+                return listPags;
+
+            }
+            else
+            {
+                return null;
+
+            }
+
+        }
+
+        public static List<Model.Recebimento> ListarRecebimentosPendentes()
+        {
+            ErpBS objMotor = new ErpBS();
+
+            StdBELista objList;
+
+            Model.Recebimento rec = new Model.Recebimento();
+            List<Model.Recebimento> listPags = new List<Model.Recebimento>();
+
+            if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
+            {
+
+                objList = PriEngine.Engine.Consulta("SELECT dbo.Pendentes.ValorTotal, dbo.Pendentes.ValorPendente, dbo.Clientes.Cliente, dbo.Clientes.Nome FROM dbo.Pendentes INNER JOIN dbo.Clientes ON dbo.Pendentes.Entidade = dbo.Clientes.Cliente");
+
+
+                while (!objList.NoFim())
+                {
+                    rec = new Model.Recebimento();
+                    rec.Entidade = objList.Valor("Cliente");
+                    rec.Nome = objList.Valor("Nome");
+                    rec.ValorPendente = objList.Valor("ValorPendente");
+                    rec.ValorTotal = objList.Valor("ValorTotal");
+
+                    listPags.Add(rec);
+                    objList.Seguinte();
+                }
+
+                return listPags;
+
+            }
+            else
+            {
+                return null;
+
+            }
+        }
+        
         //------------------------------------ ENCOMENDA ---------------------
         /*
         public static Model.RespostaErro TransformaDoc(Model.DocCompra dc)
