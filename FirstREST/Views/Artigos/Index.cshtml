@@ -28,26 +28,51 @@
     <span id="message"></span>
 </div>
 <script>
-    var request = $.get("/api/artigos");
-    request.success(function (data) {
-        for (Artigo in data) {
-                $("#tabelaArtigos tbody").append("<tr><td>" + data[Artigo].CodArtigo + "</td>"
-                                                  + "<td>" + data[Artigo].DescArtigo + "</td></tr>");
-        }
-        $(loading).fadeOut();
-        $(artigos).fadeIn();
-    }, 'json');
-    request.error(function (jqXHR, textStatus, errorThrown) {
-        if (textStatus == 'timeout') {
-            $(loading).fadeOut();
-            $('#artigosErro #message').append(' O servidor não está a responder');
-            $(artigosErro).fadeIn();
-        }
+    var arts = [];
+    google.load('visualization', '1.0', { 'packages': ['corechart', 'table'] });
 
-        if (textStatus == 'error') {
-            $(loading).fadeOut();
-            $('#artigosErro #message').append('Erro a obter os artigos: ' + errorThrown);
-            $(artigosErro).fadeIn();
+    google.setOnLoadCallback(artigos);
+
+    var requestArtigos = $.ajax({
+        url: "/api/artigos",
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
+        error: function () {
+            return true;
+        },
+        success: function (data) {
+            for (index in data) {
+                arts.push(data[index]);
+            }
+            $("#loading").fadeOut();
         }
     });
+
+    function artigos() {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Código Artigo');
+        data.addColumn('string', 'Descrição Artigo');
+        for (index in arts) {
+            data.addRows([
+                [arts[index].CodArtigo,arts[index].DescArtigo]
+            ]);
+        }
+        // Set chart options
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.Table(document.getElementById('table_div'));
+        chart.draw(data);
+        $(window).resize(function () {
+            chart.draw(data);
+        });
+    }
 </script>
+
+<p>
+    <div id="table_div">
+
+    </div>
+</p>
