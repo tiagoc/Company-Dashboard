@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Pagamentos";
+}
+<script type="text/javascript">
+      google.load("visualization", "1", {packages:["gauge"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+
+        var data1 = google.visualization.arrayToDataTable([
+          ['%'],
+          [60]
+        ]);
+        var data2 = google.visualization.arrayToDataTable([
+        ['%'],
+        [70]
+        ]);
+        var data3 = google.visualization.arrayToDataTable([
+        ['%'],
+        [10]
+        ]);
+
+        var options = {
+          width: 400, height: 120,
+          redFrom: 0, redTo: 33.3,
+          yellowFrom: 33.3, yellowTo: 66.6,
+          greenFrom: 66.6, greenTo: 100,
+          minorTicks: 5
+        };
+
+        var chart1 = new google.visualization.Gauge(document.getElementById('chart1'));
+        var chart2 = new google.visualization.Gauge(document.getElementById('chart2'));
+        var chart3 = new google.visualization.Gauge(document.getElementById('chart3'));
+
+        chart1.draw(data1, options);
+        chart2.draw(data2, options);
+        chart3.draw(data3, options);
+      }
+</script>
+<div class="row">
+    <div class="col-md-4" style=" text-align: center">
+        <div id="chart1" style=" display: inline-block; float: none; /* reset the text-align */ text-align: left; /* inline-block space fix */ margin-right: -4px;"></div>
+        <h3>Saldo</h3>
+    </div>
+    <div class="col-md-4" style=" text-align: center">
+        <div id="chart2" style=" display: inline-block; float: none; /* reset the text-align */ text-align: left; /* inline-block space fix */ margin-right: -4px;"></div>
+        <h3>Pagamentos feitos aos Fornecedores</h3>
+    </div>
+    <div class="col-md-3" style=" text-align: center">
+        <div id="chart3" style=" display: inline-block; float: none; /* reset the text-align */ text-align: left; /* inline-block space fix */ margin-right: -4px;"></div>
+        <h3>Pagamentos recebidos dos Clientes</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6" style=" text-align: center">
+        <p><button class="btn btn-success">Pagar dívida a Fornecedores</button></p>
+    </div>
+    <div class="col-md-6" style=" text-align: center">
+        <p><button class="btn btn-primary">Receber pagamento de Clientes</button></p>
+    </div>
+</div>

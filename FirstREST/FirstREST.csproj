@@ -296,6 +296,7 @@
     <Compile Include="Controllers\FornecedoresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\API\ValuesController.cs" />
+    <Compile Include="Controllers\PagamentosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -410,6 +411,7 @@
     <Content Include="Views\Artigos\Index.cshtml" />
     <Content Include="Views\Estatisticas\Index.cshtml" />
     <Content Include="Views\Fornecedores\Index.cshtml" />
+    <Content Include="Views\Pagamentos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
