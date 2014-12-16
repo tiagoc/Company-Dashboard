@@ -35,26 +35,48 @@
         chart2.draw(data2, options);
         chart3.draw(data3, options);
       }
+      function press(id,id2){
+          $("#" + id2).fadeOut();
+          $("#" + id).fadeIn();
+      }
 </script>
-<div class="row">
-    <div class="col-md-4" style=" text-align: center">
-        <div id="chart1" style=" display: inline-block; float: none; /* reset the text-align */ text-align: left; /* inline-block space fix */ margin-right: -4px;"></div>
-        <h3>Saldo</h3>
+<div id="start">
+    <div class="row">
+        <div class="col-md-4" style=" text-align: center">
+            <div id="chart1" style=" display: inline-block; float: none; /* reset the text-align */ text-align: left; /* inline-block space fix */ margin-right: -4px;"></div>
+            <h3>Saldo</h3>
+        </div>
+        <div class="col-md-4" style=" text-align: center">
+            <div id="chart2" style=" display: inline-block; float: none; /* reset the text-align */ text-align: left; /* inline-block space fix */ margin-right: -4px;"></div>
+            <h3>Pagamentos feitos aos Fornecedores</h3>
+        </div>
+        <div class="col-md-3" style=" text-align: center">
+            <div id="chart3" style=" display: inline-block; float: none; /* reset the text-align */ text-align: left; /* inline-block space fix */ margin-right: -4px;"></div>
+            <h3>Pagamentos recebidos dos Clientes</h3>
+        </div>
     </div>
-    <div class="col-md-4" style=" text-align: center">
-        <div id="chart2" style=" display: inline-block; float: none; /* reset the text-align */ text-align: left; /* inline-block space fix */ margin-right: -4px;"></div>
-        <h3>Pagamentos feitos aos Fornecedores</h3>
-    </div>
-    <div class="col-md-3" style=" text-align: center">
-        <div id="chart3" style=" display: inline-block; float: none; /* reset the text-align */ text-align: left; /* inline-block space fix */ margin-right: -4px;"></div>
-        <h3>Pagamentos recebidos dos Clientes</h3>
+    <div class="row">
+        <div class="col-md-6" style=" text-align: center">
+            <p><button class="btn btn-success" onclick="press('pagar','start')">Pagar dívida a Fornecedores</button></p>
+        </div>
+        <div class="col-md-6" style=" text-align: center">
+            <p><button class="btn btn-primary" onclick="press('receber','start')">Receber pagamento de Clientes</button></p>
+        </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-6" style=" text-align: center">
-        <p><button class="btn btn-success">Pagar dívida a Fornecedores</button></p>
+<div id="pagar" hidden>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Pagar dívida a Fornecedor</h3>
+            <button class="btn btn-default" onclick="press('start','pagar')">Voltar a trás</button>
+        </div>
     </div>
-    <div class="col-md-6" style=" text-align: center">
-        <p><button class="btn btn-primary">Receber pagamento de Clientes</button></p>
+</div>
+<div id="receber" hidden>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Receber pagamento de Cliente</h3>
+            <button class="btn btn-default" onclick="press('start','receber')">Voltar a trás</button>
+        </div>
     </div>
 </div>
