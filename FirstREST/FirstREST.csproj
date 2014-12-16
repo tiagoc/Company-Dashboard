@@ -286,6 +286,8 @@
     <Compile Include="Controllers\API\ArtigosMaisVendidosController.cs" />
     <Compile Include="Controllers\API\ClientesController.cs" />
     <Compile Include="Controllers\API\FornecedoresController.cs" />
+    <Compile Include="Controllers\API\PagamentosController.cs" />
+    <Compile Include="Controllers\API\RecebimentosController.cs" />
     <Compile Include="Controllers\ArtigosController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ConsultarDocumentoController.cs" />
@@ -308,6 +310,8 @@
     <Compile Include="Lib_Primavera\Model\DocVenda.cs" />
     <Compile Include="Lib_Primavera\Model\LinhaDocCompra.cs" />
     <Compile Include="Lib_Primavera\Model\LinhaDocVenda.cs" />
+    <Compile Include="Lib_Primavera\Model\Pagamento.cs" />
+    <Compile Include="Lib_Primavera\Model\Recebimento.cs" />
     <Compile Include="Lib_Primavera\Model\RespostaErro.cs" />
     <Compile Include="Lib_Primavera\PriEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

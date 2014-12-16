@@ -2,22 +2,57 @@
     ViewBag.Title = "Pagamentos";
 }
 <script type="text/javascript">
-      google.load("visualization", "1", {packages:["gauge"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
+    var porPagar = 0;
+    var pagamentoTotal = 0;
+    var porReceber = 0;
+    var recebimentoTotal = 0;
+    var pagamentosPendentes = $.ajax({
+        url: "/api/Pagamentos",
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
+        error: function () {
+            return true;
+        },
+        success: function (data) {
+            for (index in data) {
+                porPagar += data[index].ValorPendente;
+                pagamentoTotal += data[index].ValorTotal;
+            }
+        }
+    });
+    var recebimentosPendentes = $.ajax({
+        url: "/api/Recebimentos",
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
+        error: function () {
+            return true;
+        },
+        success: function (data) {
+            for (index in data) {
+                porReceber += data[index].ValorPendente;
+                recebimentoTotal += data[index].ValorTotal;
+            }
+        }
+    });
+    
+        google.load("visualization", "1", {packages:["gauge"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
 
-        var data1 = google.visualization.arrayToDataTable([
-          ['%'],
-          [60]
-        ]);
         var data2 = google.visualization.arrayToDataTable([
         ['%'],
-        [70]
+        [parseInt( 100 - (porPagar / pagamentoTotal) * 100)]
         ]);
+        $("#porpagar").text(porPagar * (-1));
         var data3 = google.visualization.arrayToDataTable([
         ['%'],
-        [10]
+        [parseInt(100 - (porReceber / recebimentoTotal) * 100)]
         ]);
+        $("#porreceber").text(porReceber);
 
         var options = {
           width: 400, height: 120,
@@ -27,39 +62,29 @@
           minorTicks: 5
         };
 
-        var chart1 = new google.visualization.Gauge(document.getElementById('chart1'));
         var chart2 = new google.visualization.Gauge(document.getElementById('chart2'));
         var chart3 = new google.visualization.Gauge(document.getElementById('chart3'));
 
-        chart1.draw(data1, options);
         chart2.draw(data2, options);
         chart3.draw(data3, options);
       }
-      function press(id,id2){
-          $("#" + id2).fadeOut();
+      function press(id, id2) {
           $("#" + id).fadeIn();
+          $("#" + id2).fadeOut();
       }
 </script>
 <div id="start">
     <div class="row">
-        <div class="col-md-4" style=" text-align: center">
-            <div id="chart1" style=" display: inline-block; float: none; /* reset the text-align */ text-align: left; /* inline-block space fix */ margin-right: -4px;"></div>
-            <h3>Saldo</h3>
-        </div>
-        <div class="col-md-4" style=" text-align: center">
+        <div class="col-md-6" style=" text-align: center">
             <div id="chart2" style=" display: inline-block; float: none; /* reset the text-align */ text-align: left; /* inline-block space fix */ margin-right: -4px;"></div>
             <h3>Pagamentos feitos aos Fornecedores</h3>
-        </div>
-        <div class="col-md-3" style=" text-align: center">
-            <div id="chart3" style=" display: inline-block; float: none; /* reset the text-align */ text-align: left; /* inline-block space fix */ margin-right: -4px;"></div>
-            <h3>Pagamentos recebidos dos Clientes</h3>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6" style=" text-align: center">
+            <h3>Por Pagar: <span id="porpagar">0</span>€</h3>
             <p><button class="btn btn-success" onclick="press('pagar','start')">Pagar dívida a Fornecedores</button></p>
         </div>
         <div class="col-md-6" style=" text-align: center">
+            <div id="chart3" style=" display: inline-block; float: none; /* reset the text-align */ text-align: left; /* inline-block space fix */ margin-right: -4px;"></div>
+            <h3>Pagamentos recebidos dos Clientes</h3>
+            <h3>Por Receber: <span id="porreceber">0</span>€</h3>
             <p><button class="btn btn-primary" onclick="press('receber','start')">Receber pagamento de Clientes</button></p>
         </div>
     </div>
