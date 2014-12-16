@@ -31,7 +31,7 @@ namespace FirstREST.Lib_Primavera
             {
 
 
-                objList = PriEngine.Engine.Consulta("SELECT dbo.LinhasCompras.Descricao, SUM(dbo.LinhasCompras.Quantidade) AS Soma FROM dbo.CabecCompras INNER JOIN dbo.LinhasCompras ON dbo.CabecCompras.Id = dbo.LinhasCompras.IdCabecCompras GROUP BY dbo.LinhasCompras.Descricao");
+                objList = PriEngine.Engine.Consulta("SELECT TOP 5 dbo.LinhasCompras.Descricao, SUM(dbo.LinhasCompras.Quantidade) AS Soma FROM dbo.CabecCompras INNER JOIN dbo.LinhasCompras ON dbo.CabecCompras.Id = dbo.LinhasCompras.IdCabecCompras GROUP BY dbo.LinhasCompras.Descricao");
                 while (!objList.NoFim())
                 {
                     Dictionary<string, string> art = new Dictionary<string, string>();
@@ -168,7 +168,7 @@ namespace FirstREST.Lib_Primavera
 
                 //objList = PriEngine.Engine.Comercial.Clientes.LstClientes();
 
-                objList = PriEngine.Engine.Consulta("SELECT dbo.LinhasDoc.Descricao, SUM(dbo.LinhasDoc.Quantidade) AS Soma FROM dbo.CabecDoc INNER JOIN dbo.LinhasDoc ON dbo.CabecDoc.Id = dbo.LinhasDoc.IdCabecDoc GROUP BY dbo.LinhasDoc.Descricao");
+                objList = PriEngine.Engine.Consulta("SELECT TOP 5 dbo.LinhasDoc.Descricao, SUM(dbo.LinhasDoc.Quantidade) AS Soma FROM dbo.CabecDoc INNER JOIN dbo.LinhasDoc ON dbo.CabecDoc.Id = dbo.LinhasDoc.IdCabecDoc GROUP BY dbo.LinhasDoc.Descricao");
                 while (!objList.NoFim())
                 {
                     Dictionary<string, string> art = new Dictionary<string, string>();

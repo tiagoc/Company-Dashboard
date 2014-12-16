@@ -3,7 +3,7 @@
 }
 <script>
     // Load the Visualization API and the piechart package.
-    google.load('visualization', '1.0', {'packages':['corechart']});
+    google.load('visualization', '1.0', {'packages':['corechart','table']});
 
     // Set a callback to run when the Google Visualization API is loaded.
     google.setOnLoadCallback(fornecedores);
@@ -19,7 +19,8 @@
     var pagoVendas = 3000;
     var pagoCompras = 3000;
     var dividaCompras = -3242;
-    
+    var cores = ['red', 'blue', 'gold', 'pink', 'green'];
+
     var comprasEfetuadas = [];
     var vendasEfetuadas = [];
     
@@ -155,37 +156,36 @@
         ]);
 
         // Set chart options
-        var options = {
-            'title': 'Total Monetário em Faturas',
-        };
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div1'));
-        chart.draw(data, options);
+        chart.draw(data, { is3D: true });
 
         $(window).resize(function () {
-            chart.draw(data, options);
+            chart.draw(data, { is3D: true });
         });
     }
 
     function topVendas() {
         // Create the data table.
+        
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Artigo')
+        data.addColumn('string', 'Artigo');
         data.addColumn('number', 'Quantidade');
+        data.addColumn({ type: 'string', role: 'style'});
         for (index in topArtVendidos) {
             data.addRows([
-                [topArtVendidos[index].Descricao, parseFloat(topArtVendidos[index].Soma)]
+                [topArtVendidos[index].Descricao, parseFloat(topArtVendidos[index].Soma),cores[index]]
             ]);
         }
         // Set chart options
         var options = {
             'title': 'Top de artigos vendidos',
-            pieHole: 0.4,
+            legend : {position:'none'}
         };
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div4'));
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div4'));
         chart.draw(data, options);
         $(window).resize(function () {
             chart.draw(data, options);
@@ -195,21 +195,21 @@
     function topCompras() {
         // Create the data table.
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Artigo')
+        data.addColumn('string', 'Artigo');
         data.addColumn('number', 'Quantidade');
+        data.addColumn({ type: 'string', role: 'style' });
         for (index in topArtComprados) {
             data.addRows([
-                [topArtComprados[index].Descricao, (-1)*parseFloat(topArtComprados[index].Soma)]
+                [topArtComprados[index].Descricao, (-1) * parseFloat(topArtComprados[index].Soma), cores[index]]
             ]);
         }
         // Set chart options
         var options = {
-            'title': 'Top de artigos comprados',
-            pieHole: 0.4,
+            legend: { position: 'none' }
         };
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div5'));
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div5'));
         chart.draw(data, options);
         $(window).resize(function () {
             chart.draw(data, options);
@@ -219,55 +219,69 @@
     function fornecedores() {
         // Create the data table.
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Fornecedor - Artigo ')
+        data.addColumn('string', 'Fornecedor');
+        data.addColumn('string', 'Artigo');
         data.addColumn('number', 'Quantidade');
         for (index in comprasEfetuadas) {
             data.addRows([
-                [comprasEfetuadas[index].entidade + " - " +comprasEfetuadas[index].art, (-1) * comprasEfetuadas[index].qtd]
+                [comprasEfetuadas[index].entidade,comprasEfetuadas[index].art, (-1) * comprasEfetuadas[index].qtd]
             ]);
         }
         // Set chart options
-        var options = {
-            'title': 'Compras efetuadas a Fornecedores',
-            pieHole: 0.4,
-        };
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div2'));
-        chart.draw(data, options);
+        var chart = new google.visualization.Table(document.getElementById('chart_div2'));
+        chart.draw(data);
         $(window).resize(function () {
-            chart.draw(data, options);
+            chart.draw(data);
         });
     }
 
     function clientes() {
         // Create the data table.
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Cliente - Artigo ')
+        data.addColumn('string', 'Cliente');
+        data.addColumn('string', 'Artigo');
         data.addColumn('number', 'Quantidade');
         for (index in vendasEfetuadas) {
             data.addRows([
-                [vendasEfetuadas[index].entidade + " - " + vendasEfetuadas[index].art,vendasEfetuadas[index].qtd]
+                [vendasEfetuadas[index].entidade,vendasEfetuadas[index].art,vendasEfetuadas[index].qtd]
             ]);
         }
-        // Set chart options
-        var options = {
-            'title': 'Vendas efetuadas a Clientes',
-            pieHole: 0.4,
-        };
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div3'));
-        chart.draw(data, options);
+        var chart = new google.visualization.Table(document.getElementById('chart_div3'));
+        chart.draw(data);
         $(window).resize(function () {
-            chart.draw(data, options);
+            chart.draw(data);
         });
     }
    
 </script>
+<div class="row">
+    <div class="col-md-12">
+        <p><h3>Total Monetário em Faturas</h3><div id="chart_div1"></div></p>
+    </div>
+</div>
 
-<div id="chart_div1"></div>
-<div id="chart_div2"></div>
-<div id="chart_div3"></div>
-<div id="chart_div4"></div>
-<div id="chart_div5"></div>
+<div class="row">
+    <div class="col-md-6">
+        <p><h3>Compras efetuadas a fornecedores</h3><div id="chart_div2"></div></p>
+    </div>
+    <div class="col-md-6">
+        <p><h3>Vendas efetuadas a clientes</h3><div id="chart_div3"></div></p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <p><h3>Top de artigos vendidos</h3><div id="chart_div4"></div></p>
+    </div>
+    <div class="col-md-6">
+        <p><h3>Top de artigos comprados</h3><div id="chart_div5"></div></p>
+    </div>
+</div>
+
+
+
+
