@@ -507,13 +507,13 @@ namespace FirstREST.Lib_Primavera
             if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT dbo.Pendentes.ValorTotal, dbo.Pendentes.ValorPendente, dbo.Clientes.Cliente, dbo.Clientes.Nome FROM dbo.Pendentes INNER JOIN dbo.Clientes ON dbo.Pendentes.Entidade = dbo.Clientes.Cliente");
+                objList = PriEngine.Engine.Consulta("SELECT        dbo.Pendentes.Entidade, SUM(dbo.Pendentes.ValorTotal) AS ValorTotal, SUM(dbo.Pendentes.ValorPendente) AS ValorPendente, dbo.Clientes.Nome FROM dbo.Pendentes INNER JOIN dbo.Clientes ON dbo.Pendentes.Entidade = dbo.Clientes.Cliente GROUP BY dbo.Clientes.Cliente, dbo.Pendentes.Entidade, dbo.Clientes.Nome");
 
 
                 while (!objList.NoFim())
                 {
                     rec = new Model.Recebimento();
-                    rec.Entidade = objList.Valor("Cliente");
+                    rec.Entidade = objList.Valor("Entidade");
                     rec.Nome = objList.Valor("Nome");
                     rec.ValorPendente = objList.Valor("ValorPendente");
                     rec.ValorTotal = objList.Valor("ValorTotal");

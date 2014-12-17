@@ -51,32 +51,63 @@
     <span id="message"></span>
 </div>
 <script>
-    var requestVenda = $.get("/api/docvenda");
-    requestVenda.success(function (data) {
-        console.log(data);
-        for (Venda in data) {
-            $("#tabelaVenda #doc").append("<tr><td>" + data[Venda].Data + "</td>" + "<td>" + data[Venda].Entidade + "</td>" + "<td>" + data[Venda].TotalMerc + "</td></tr>");
-            $("#tabelaVenda #doc").append("<tr><td></td><td colspan='2'><table class='table table-striped'><tbody id='docSec" + Venda + "'></tbody></table></td>" + "</tr>");
-            for (Doc in data[Venda].LinhasDoc) {
-                $("#docSec" + Venda).append("<tr>" + "<td>" + data[Venda].LinhasDoc[Doc].CodArtigo + "</td>" + "<td>" + data[Venda].LinhasDoc[Doc].CodArtigo + "</td>" + "<td>" + data[Venda].LinhasDoc[Doc].Quantidade + "<td>" + data[Venda].LinhasDoc[Doc].TotalLiquido + "</td>" + "</td>" + "</tr>");
-            }
-        }
-        $(documentosVenda).fadeIn();
-        $(loadingVenda).fadeOut();
-    }, 'json');
-    requestVenda.error(function (jqXHR, textStatus, errorThrown) {
-        if (textStatus == 'timeout') {
-            $(loadingVenda).fadeOut();
-            $('#documentosVendaErro #message').append(' O servidor não está a responder');
-            $(documentosVendaErro).fadeIn();
-        }
+    google.load('visualization', '1.0', { 'packages': ['corechart', 'table'] });
 
-        if (textStatus == 'error') {
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(docsVenda);
+    var docvenda = [];
+    var requestVenda = $.ajax({
+        url: "/api/docvenda",
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
+        error: function () {
+            return true;
+        },
+        success: function (data) {
+            for (Venda in data) {
+                for (Doc in data[Venda].LinhasDoc) {
+                    var venda = { data: '', entidade: '', codart: 0, qtd: 0, totliq: 0 }
+                    venda.entidade = data[Venda].Entidade;
+                    venda.data = data[Venda].Data;
+                    venda.qtd = data[Venda].LinhasDoc[Doc].Quantidade;
+                    venda.codart = data[Venda].LinhasDoc[Doc].CodArtigo;
+                    venda.totliq = data[Venda].LinhasDoc[Doc].TotalLiquido;
+                    docvenda.push(venda);
+                }
+            }
             $(loadingVenda).fadeOut();
-            $('#documentosVendaErro #message').append('Erro a obter os documentos de venda: ' + errorThrown);
-            $(documentosVendaErro).fadeIn();
         }
     });
+
+    function docsVenda() {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Data');
+        data.addColumn('string', 'Entidade');
+        data.addColumn('string', 'Código Artigo');
+        data.addColumn('number', 'Quantidade');
+        data.addColumn('number', 'Total Líquido');
+        for (index in docvenda) {
+            data.addRows([
+                [docvenda[index].data, docvenda[index].entidade, docvenda[index].codart, docvenda[index].qtd, docvenda[index].totliq]
+            ]);
+        }
+        // Set chart options
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.Table(document.getElementById('table_div_venda'));
+        chart.draw(data);
+        $(window).resize(function () {
+            chart.draw(data);
+        });
+    }
+
+
+
+
+
 
     var requestCompra = $.get("/api/doccompra");
     requestCompra.success(function (data) {
@@ -101,3 +132,4 @@
         }
     });
 </script>
+<p><h3>Documentos de Venda</h3><div id="table_div_venda"></div></p>

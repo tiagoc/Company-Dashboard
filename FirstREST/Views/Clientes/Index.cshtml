@@ -10,46 +10,57 @@
         </div>
     </div>
 </div>
-
-<div id="clientes" hidden>
-    <table id="tabelaClientes" class="table table-striped" >
-        <thead>
-            <tr>
-                <td>Nome</td>
-                <td>Número de Contribuinte</td>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-</div>
 <div class="alert alert-danger" role="alert" id="clientesErro" hidden>
     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
     <span class="sr-only">Erro:</span>
     <span id="message"></span>
 </div>
 <script>
-    var request = $.get("/api/clientes");
-    request.success(function (data) {
-        for (Cliente in data) {
-            if (data[Cliente].CodCliente != "VD")
-                $("#tabelaClientes tbody").append("<tr><td>" + data[Cliente].NomeCliente + "</td>"
-                                                  + "<td>" + data[Cliente].NumContribuinte + "</td></tr>");
-        }
-        $(loading).fadeOut();
-        $(clientes).fadeIn();
-    }, 'json');
-    request.error(function (jqXHR, textStatus, errorThrown) {
-        if (textStatus == 'timeout') {
-            $(loading).fadeOut();
-            $('#clientesErro #message').append(' O servidor não está a responder');
-            $(clientesErro).fadeIn();
+    // Load the Visualization API and the piechart package.
+    google.load('visualization', '1.0', { 'packages': ['corechart', 'table'] });
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(clientes);
+    var clientes = [];
+
+    var requestClientes = $.ajax({
+        url: "/api/recebimentos",
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
+        error: function () {
+            return true;
+        },
+        success: function (data) {
+            for (index in data) {
+                clientes.push(data[index]);
+            }
+            $("#loading").fadeOut();
         }
 
-        if (textStatus == 'error') {
-            $(loading).fadeOut();
-            $('#clientesErro #message').append('Erro a obter os clientes: ' + errorThrown);
-            $(clientesErro).fadeIn();
-        }
     });
+
+    function clientes() {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Entidade');
+        data.addColumn('string', 'Nome');
+        data.addColumn('number', 'Valor Total');
+        data.addColumn('number', 'Valor Pendente');
+        for (index in clientes) {
+            data.addRows([
+                [clientes[index].Entidade, clientes[index].Nome, clientes[index].ValorTotal, clientes[index].ValorPendente]
+            ]);
+        }
+        // Set chart options
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.Table(document.getElementById('table_div'));
+        chart.draw(data);
+        $(window).resize(function () {
+            chart.draw(data);
+        });
+    }
 </script>
+<div id="table_div"></div>

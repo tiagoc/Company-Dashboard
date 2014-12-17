@@ -159,7 +159,7 @@
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div1'));
-        chart.draw(data, { is3D: true });
+        chart.draw(data, { backgroundColor: 'transparent', is3D: true });
 
         $(window).resize(function () {
             chart.draw(data, { is3D: true });
