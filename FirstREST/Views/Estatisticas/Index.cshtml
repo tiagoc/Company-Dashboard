@@ -15,6 +15,15 @@
     var numeroCompras = 0;
     var precoVendas = 0;
     var precoCompras = 0;
+
+    var compras2014 = { numero: 0, preco: 0 };
+    var compras2015 = { numero: 0, preco: 0 };
+    var compras2016 = { numero: 0, preco: 0 };
+
+    var vendas2014 = { numero: 0, preco: 0 };
+    var vendas2015 = { numero: 0, preco: 0 };
+    var vendas2016 = { numero: 0, preco: 0 };
+
     var dividaVendas = -4545;
     var pagoVendas = 3000;
     var pagoCompras = 3000;
@@ -118,9 +127,21 @@
             return true;
         },
         success: function (data) {
-            numeroVendas = data.length;
             for (index in data) {
-                precoVendas = precoVendas + data[index].TotalMerc;
+                var date = new Date(data[index].Data);
+                var dataStr = date.getFullYear().toString();
+                if (dataStr == "2014") {
+                    vendas2014.numero++;
+                    vendas2014.preco += data[index].TotalMerc;
+                }
+                if (dataStr == "2015") {
+                    vendas2015.numero++;
+                    vendas2015.preco += data[index].TotalMerc;
+                }
+                if (dataStr == "2016") {
+                    vendas2016.numero++;
+                    vendas2016.preco += data[index].TotalMerc;
+                }
             }
         }
     });
@@ -134,9 +155,21 @@
             return true;
         },
         success: function (data) {
-            numeroCompras = data.length;
             for (index in data) {
-                precoCompras = precoCompras + data[index].TotalMerc;
+                var date = new Date(data[index].Data);
+                var dataStr = date.getFullYear().toString();
+                if (dataStr == "2014") {
+                    compras2014.numero++;
+                    compras2014.preco += data[index].TotalMerc;
+                }
+                if (dataStr == "2015") {
+                    compras2015.numero++;
+                    compras2015.preco += data[index].TotalMerc;
+                }
+                if (dataStr == "2016") {
+                    compras2016.numero++;
+                    compras2016.preco += data[index].TotalMerc;
+                }
             }
         }
     });
@@ -147,22 +180,45 @@
     function compras_vendas() {
 
         // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Compras/Vendas');
-        data.addColumn('number', 'Quantidade');
-        data.addRows([
-          ['Vendas', precoVendas],
-          ['Compras', (-1)*precoCompras]
+        var data2014 = new google.visualization.DataTable();
+        data2014.addColumn('string', 'Compras/Vendas');
+        data2014.addColumn('number', 'Quantidade');
+        data2014.addRows([
+          ['Vendas', vendas2014.preco],
+          ['Compras', (-1)*compras2014.preco]
+        ]);
+
+        var data2015 = new google.visualization.DataTable();
+        data2015.addColumn('string', 'Compras/Vendas');
+        data2015.addColumn('number', 'Quantidade');
+        data2015.addRows([
+          ['Vendas', vendas2015.preco],
+          ['Compras', (-1) * compras2015.preco]
+        ]);
+
+        var data2016 = new google.visualization.DataTable();
+        data2016.addColumn('string', 'Compras/Vendas');
+        data2016.addColumn('number', 'Quantidade');
+        data2016.addRows([
+          ['Vendas', vendas2016.preco],
+          ['Compras', (-1) * compras2016.preco]
         ]);
 
         // Set chart options
 
         // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div1'));
-        chart.draw(data, { backgroundColor: 'transparent', is3D: true });
+        var chart2014 = new google.visualization.PieChart(document.getElementById('chart_div_pie_1'));
+        chart2014.draw(data2014, { backgroundColor: 'transparent', is3D: true });
+
+        var chart2015 = new google.visualization.PieChart(document.getElementById('chart_div_pie_2'));
+        chart2015.draw(data2015, { backgroundColor: 'transparent', is3D: true });
+        var chart2016 = new google.visualization.PieChart(document.getElementById('chart_div_pie_3'));
+        chart2016.draw(data2016, { backgroundColor: 'transparent', is3D: true });
 
         $(window).resize(function () {
-            chart.draw(data, { backgroundColor: 'transparent', is3D: true });
+            chart2014.draw(data2014, { backgroundColor: 'transparent', is3D: true });
+            chart2015.draw(data2015, { backgroundColor: 'transparent', is3D: true });
+            chart2016.draw(data2016, { backgroundColor: 'transparent', is3D: true });
         });
     }
 
@@ -259,8 +315,15 @@
    
 </script>
 <div class="row">
-    <div class="col-md-12">
-        <p><h3>Total Monetário em Faturas</h3><div id="chart_div1"></div></p>
+    <h2 class="text-center">Previsões tendo em conta os valores de faturação</h2>
+    <div class="col-md-4">
+        <p><h3>Total Monetário em Faturas em 2014</h3><div id="chart_div_pie_1"></div></p>
+    </div>
+    <div class="col-md-4">
+        <p><h3>Total Monetário em Faturas em 2015</h3><div id="chart_div_pie_2"></div></p>
+    </div>
+    <div class="col-md-4">
+        <p><h3>Total Monetário em Faturas em 2016</h3><div id="chart_div_pie_3"></div></p>
     </div>
 </div>
 

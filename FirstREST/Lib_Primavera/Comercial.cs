@@ -506,7 +506,7 @@ namespace FirstREST.Lib_Primavera
             if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT dbo.Pendentes.ValorTotal, dbo.Pendentes.ValorPendente, dbo.Fornecedores.Fornecedor, dbo.Fornecedores.Nome FROM dbo.Pendentes INNER JOIN dbo.Fornecedores ON dbo.Pendentes.Entidade = dbo.Fornecedores.Fornecedor");
+                objList = PriEngine.Engine.Consulta("SELECT SUM(dbo.Pendentes.ValorTotal) AS ValorTotal, SUM(dbo.Pendentes.ValorPendente) AS ValorPendente, dbo.Fornecedores.Fornecedor, dbo.Fornecedores.Nome FROM dbo.Pendentes INNER JOIN dbo.Fornecedores ON dbo.Pendentes.Entidade = dbo.Fornecedores.Fornecedor GROUP BY dbo.Fornecedores.Fornecedor, dbo.Pendentes.Entidade, dbo.Fornecedores.Nome");
 
 
                 while (!objList.NoFim())
@@ -514,8 +514,8 @@ namespace FirstREST.Lib_Primavera
                     pag = new Model.Pagamento();
                     pag.Entidade = objList.Valor("Fornecedor");
                     pag.Nome = objList.Valor("Nome");
-                    pag.ValorPendente = objList.Valor("ValorPendente");
-                    pag.ValorTotal = objList.Valor("ValorTotal");
+                    pag.ValorPendente = Math.Round(objList.Valor("ValorPendente"),2);
+                    pag.ValorTotal = Math.Round(objList.Valor("ValorTotal"),2);
 
                     listPags.Add(pag);
                     objList.Seguinte();
@@ -552,8 +552,8 @@ namespace FirstREST.Lib_Primavera
                     rec = new Model.Recebimento();
                     rec.Entidade = objList.Valor("Entidade");
                     rec.Nome = objList.Valor("Nome");
-                    rec.ValorPendente = objList.Valor("ValorPendente");
-                    rec.ValorTotal = objList.Valor("ValorTotal");
+                    rec.ValorPendente = Math.Round(objList.Valor("ValorPendente"),2);
+                    rec.ValorTotal = Math.Round(objList.Valor("ValorTotal"),2);
 
                     listPags.Add(rec);
                     objList.Seguinte();
