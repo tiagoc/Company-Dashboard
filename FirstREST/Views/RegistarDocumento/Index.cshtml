@@ -4,13 +4,27 @@
 <div>ola</div>
 <script>
     
-    var linhasDoc = [{"CodArtigo":"MB.0001","Quantidade":5,"Armazem":"A2","PrecoUnitario":5,"Desconto":2}];
-    var doc = { "Entidade": "F0001", "NumDocExterno": "1", "Serie": "A", "LinhasDoc": linhasDoc };
+    var linhasDocVenda = [{ "CodArtigo": "MV.0001", "Quantidade": 5, "Armazem": "A2", "PrecoUnitario": 30, "Desconto": 0 }];
+    var docvenda = { "Entidade": "C0002", "Serie": "A","LinhasDoc": linhasDocVenda };
+
+
+    var linhasDocCompra = [{"CodArtigo":"MB.0001","Quantidade":5,"Armazem":"A2","PrecoUnitario":5,"Desconto":2}];
+    var doccompra = { "Entidade": "F0001", "NumDocExterno": "1", "Serie": "A", "LinhasDoc": linhasDocCompra };
+
+
     var registarCompra = $.ajax({
         type: "POST",
         url: "/api/doccompra",
-        data: doc
+        data: doccompra
     });
+
+    var registarVenda = $.ajax({
+        type: "POST",
+        url: "/api/docvenda",
+        data: docvenda
+    });
+
+
 
 </script>
 <h2>Index</h2>

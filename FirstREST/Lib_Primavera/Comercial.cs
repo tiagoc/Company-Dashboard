@@ -783,7 +783,7 @@ namespace FirstREST.Lib_Primavera
                     //myEnc.set_DataDoc(dv.Data);
                     myEnc.set_Entidade(dv.Entidade);
                     myEnc.set_Serie(dv.Serie);
-                    myEnc.set_Tipodoc("ECL");
+                    myEnc.set_Tipodoc("FA");
                     myEnc.set_TipoEntidade("C");
                     // Linhas do documento para a lista de linhas
                     lstlindv = dv.LinhasDoc;
