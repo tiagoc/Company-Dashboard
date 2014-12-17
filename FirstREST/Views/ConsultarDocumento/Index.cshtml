@@ -55,7 +55,9 @@
 
     // Set a callback to run when the Google Visualization API is loaded.
     google.setOnLoadCallback(docsVenda);
+    google.setOnLoadCallback(docsCompra);
     var docvenda = [];
+    var doccompra = [];
     var requestVenda = $.ajax({
         url: "/api/docvenda",
         type: 'GET',
@@ -103,33 +105,54 @@
             chart.draw(data);
         });
     }
-
-
-
-
-
-
-    var requestCompra = $.get("/api/doccompra");
-    requestCompra.success(function (data) {
-        console.log(data);
-        for (Compra in data) {
-
-        }
-        $(documentosCompra).fadeIn();
-        $(loadingCompra).fadeOut();
-    }, 'json');
-    requestCompra.error(function (jqXHR, textStatus, errorThrown) {
-        if (textStatus == 'timeout') {
+    var requestCompra = $.ajax({
+        url: "/api/doccompra",
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
+        error: function () {
+            return true;
+        },
+        success: function (data) {
+            for (Compra in data) {
+                for (Doc in data[Compra].LinhasDoc) {
+                    var compra = { data: '', entidade: '', codart: 0, qtd: 0, totliq: 0 }
+                    compra.entidade = data[Compra].Entidade;
+                    compra.data = data[Compra].Data;
+                    compra.qtd = data[Compra].LinhasDoc[Doc].Quantidade;
+                    compra.codart = data[Compra].LinhasDoc[Doc].CodArtigo;
+                    compra.totliq = data[Compra].LinhasDoc[Doc].TotalLiquido;
+                    doccompra.push(compra);
+                }
+            }
             $(loadingCompra).fadeOut();
-            $('#documentosCompraErro #message').append(' O servidor não está a responder');
-            $(documentosCompraErro).fadeIn();
-        }
-
-        if (textStatus == 'error') {
-            $(loadingCompra).fadeOut();
-            $('#documentosCompraErro #message').append('Erro a obter os documentos de compra: ' + errorThrown);
-            $(documentosCompraErro).fadeIn();
         }
     });
+    
+
+    function docsCompra() {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Data');
+        data.addColumn('string', 'Entidade');
+        data.addColumn('string', 'Código Artigo');
+        data.addColumn('number', 'Quantidade');
+        data.addColumn('number', 'Total Líquido');
+        for (index in doccompra) {
+            data.addRows([
+                [doccompra[index].data, doccompra[index].entidade, doccompra[index].codart, doccompra[index].qtd, doccompra[index].totliq]
+            ]);
+        }
+        // Set chart options
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.Table(document.getElementById('table_div_compra'));
+        chart.draw(data);
+        $(window).resize(function () {
+            chart.draw(data);
+        });
+    }
 </script>
 <p><h3>Documentos de Venda</h3><div id="table_div_venda"></div></p>
+<p><h3>Documentos de Compra</h3><div id="table_div_compra"></div></p>

@@ -10,49 +10,88 @@
         </div>
     </div>
 </div>
-
-<div id="fornecedores" hidden>
-    <table id="tabelaFornecedores" class="table table-striped">
-        <thead>
-            <tr>
-                <td>Nome</td>
-                <td>Número de Contribuinte</td>
-                <td>Morada</td>
-                <td>Localidade</td>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
 <div class="alert alert-danger" role="alert" id="fornecedoresErro" hidden>
     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
     <span class="sr-only">Erro:</span>
     <span id="message"></span>
 </div>
 <script>
-    var request = $.get("/api/fornecedores");
-    request.success(function (data) {
-        for (Fornecedor in data) {
-            if (data[Fornecedor].CodFornecedor != "FVD")
-                $("#tabelaFornecedores tbody").append("<tr><td>" + data[Fornecedor].NomeFornecedor + "</td>"
-                                                  + "<td>" + data[Fornecedor].NumContribuinte + "</td>"
-                                                  + "<td>" + data[Fornecedor].Morada + "</td>"
-                                                  + "<td>" + data[Fornecedor].Local + "</td>" +"</tr>");
-        }
-        $(loading).fadeOut();
-        $(fornecedores).fadeIn();
-    }, 'json');
-    request.error(function (jqXHR, textStatus, errorThrown) {
-        if (textStatus == 'timeout') {
-            $(loading).fadeOut();
-            $('#fornecedoresErro #message').append(' O servidor não está a responder');
-            $(fornecedoresErro).fadeIn();
+    // Load the Visualization API and the piechart package.
+    google.load('visualization', '1.0', { 'packages': ['corechart', 'table'] });
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(fornecedores);
+    var dividas = [];
+    var fornecedores = [];
+
+    var requestDividas = $.ajax({
+        url: "/api/pagamentos",
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
+        error: function () {
+            return true;
+        },
+        success: function (data) {
+            for (index in data) {
+                dividas.push(data[index]);
+            }
+            $("#loading").fadeOut();
         }
 
-        if (textStatus == 'error') {
-            $(loading).fadeOut();
-            $('#fornecedoresErro #message').append('Erro a obter os fornecedores: ' + errorThrown);
-            $(fornecedoresErro).fadeIn();
-        }
     });
+
+    var requestFornecedores = $.ajax({
+        url: "/api/fornecedores",
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
+        error: function () {
+            return true;
+        },
+        success: function (data) {
+            for (index in data) {
+                if (data[index].CodFornecedor != "FVD")
+                 fornecedores.push(data[index]);
+            }
+            $("#loading").fadeOut();
+        }
+
+    });
+
+    function fornecedores() {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Entidade');
+        data.addColumn('string', 'Nome');
+        data.addColumn('string', 'Número de Contribuinte');
+        data.addColumn('string', 'Morada');
+        data.addColumn('string', 'Local');
+        data.addColumn('number', 'Valor Total');
+        data.addColumn('number', 'Valor Pendente');
+        for (index in fornecedores) {
+            var div = [];
+            for (index1 in dividas) {
+                if (dividas[index1].Entidade == fornecedores[index].CodFornecedor) {
+                    div.push(dividas[index1].ValorTotal);
+                    div.push(dividas[index1].ValorPendente);
+                    break;
+                }
+            }
+            data.addRows([
+                [fornecedores[index].CodFornecedor, fornecedores[index].NomeFornecedor, fornecedores[index].NumContribuinte, fornecedores[index].Morada,fornecedores[index].Local,div[0],div[1]]
+            ]);
+        }
+        // Set chart options
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.Table(document.getElementById('table_div'));
+        chart.draw(data);
+        $(window).resize(function () {
+            chart.draw(data);
+        });
+    }
 </script>
+<div id="table_div"></div>

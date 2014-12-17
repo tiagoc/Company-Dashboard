@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Historico";
+}
+
+
+<script>
+    // Load the Visualization API and the piechart package.
+    google.load('visualization', '1.0', { 'packages': ['corechart', 'table'] });
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(historicoClientes);
+    google.setOnLoadCallback(historicoFornecedores);
+    var historico = [];
+
+    var requestClientes = $.ajax({
+        url: "/api/historico",
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
+        error: function () {
+            return true;
+        },
+        success: function (data) {
+            for (index in data) {
+                historico.push(data[index]);
+            }
+            $("#loading").fadeOut();
+        }
+
+    });
+
+    function historicoClientes() {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Entidade');
+        data.addColumn('string', 'Tipo de Documento');
+        data.addColumn('string', 'Número de Documento');
+        data.addColumn('string', 'Data de Documento');
+        data.addColumn('number', 'Valor Total');
+        for (index in historico) {
+            if (historico[index].TipoEntidade == "C")
+            data.addRows([
+                [historico[index].Entidade, historico[index].TipoDoc, historico[index].NumDoc, historico[index].Data , historico[index].ValorTotal]
+            ]);
+        }
+        // Set chart options
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.Table(document.getElementById('table_div1'));
+        chart.draw(data);
+        $(window).resize(function () {
+            chart.draw(data);
+        });
+    }
+
+    function historicoFornecedores() {
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Entidade');
+        data.addColumn('string', 'Tipo de Documento');
+        data.addColumn('string', 'Número de Documento');
+        data.addColumn('string', 'Data de Documento');
+        data.addColumn('number', 'Valor Total');
+        for (index in historico) {
+            if (historico[index].TipoEntidade == "F")
+                data.addRows([
+                    [historico[index].Entidade, historico[index].TipoDoc, historico[index].NumDoc, historico[index].Data, historico[index].ValorTotal]]);
+        }
+        // Set chart options
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.Table(document.getElementById('table_div2'));
+        chart.draw(data);
+        $(window).resize(function () {
+            chart.draw(data);
+        });
+    }
+</script>
+
+<p><h3>Vendas a clientes</h3><div id="table_div1"></div></p>
+<p><h3>Compras a fornecedores</h3><div id="table_div2"></div></p>
+

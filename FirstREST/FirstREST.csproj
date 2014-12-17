@@ -286,6 +286,7 @@
     <Compile Include="Controllers\API\ArtigosMaisVendidosController.cs" />
     <Compile Include="Controllers\API\ClientesController.cs" />
     <Compile Include="Controllers\API\FornecedoresController.cs" />
+    <Compile Include="Controllers\API\HistoricoController.cs" />
     <Compile Include="Controllers\API\PagamentosController.cs" />
     <Compile Include="Controllers\API\RecebimentosController.cs" />
     <Compile Include="Controllers\ArtigosController.cs" />
@@ -296,9 +297,11 @@
     <Compile Include="Controllers\API\DocVendaController.cs" />
     <Compile Include="Controllers\EstatisticasController.cs" />
     <Compile Include="Controllers\FornecedoresController.cs" />
+    <Compile Include="Controllers\HistoricoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\API\ValuesController.cs" />
     <Compile Include="Controllers\PagamentosController.cs" />
+    <Compile Include="Controllers\RegistarDocumentoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -308,6 +311,7 @@
     <Compile Include="Lib_Primavera\Model\Cliente.cs" />
     <Compile Include="Lib_Primavera\Model\DocCompra.cs" />
     <Compile Include="Lib_Primavera\Model\DocVenda.cs" />
+    <Compile Include="Lib_Primavera\Model\Historico.cs" />
     <Compile Include="Lib_Primavera\Model\LinhaDocCompra.cs" />
     <Compile Include="Lib_Primavera\Model\LinhaDocVenda.cs" />
     <Compile Include="Lib_Primavera\Model\Pagamento.cs" />
@@ -416,6 +420,8 @@
     <Content Include="Views\Estatisticas\Index.cshtml" />
     <Content Include="Views\Fornecedores\Index.cshtml" />
     <Content Include="Views\Pagamentos\Index.cshtml" />
+    <Content Include="Views\Historico\Index.cshtml" />
+    <Content Include="Views\RegistarDocumento\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

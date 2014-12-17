@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<div>ola</div>
+<script>
+    
+    var linhasDoc = [{"CodArtigo":"MB.0001","Quantidade":5,"Armazem":"A2","PrecoUnitario":5,"Desconto":2}];
+    var doc = { "Entidade": "F0001", "NumDocExterno": "1", "Serie": "A", "LinhasDoc": linhasDoc };
+    var registarCompra = $.ajax({
+        type: "POST",
+        url: "/api/doccompra",
+        data: doc
+    });
+
+</script>
+<h2>Index</h2>

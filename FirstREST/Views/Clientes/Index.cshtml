@@ -22,8 +22,28 @@
     // Set a callback to run when the Google Visualization API is loaded.
     google.setOnLoadCallback(clientes);
     var clientes = [];
+    var dividas = [];
 
     var requestClientes = $.ajax({
+        url: "/api/clientes",
+        type: 'GET',
+        async: false,
+        cache: false,
+        timeout: 30000,
+        error: function () {
+            return true;
+        },
+        success: function (data) {
+            for (index in data) {
+                if(data[index].CodCliente!="VD")
+                clientes.push(data[index]);
+            }
+            $("#loading").fadeOut();
+        }
+
+    });
+
+    var requestDividas = $.ajax({
         url: "/api/recebimentos",
         type: 'GET',
         async: false,
@@ -34,7 +54,7 @@
         },
         success: function (data) {
             for (index in data) {
-                clientes.push(data[index]);
+                dividas.push(data[index]);
             }
             $("#loading").fadeOut();
         }
@@ -46,11 +66,20 @@
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Entidade');
         data.addColumn('string', 'Nome');
-        data.addColumn('number', 'Valor Total');
+        data.addColumn('string', 'Número de Contribuinte');
+        data.addColumn('number', 'Valor Total de Dívida');
         data.addColumn('number', 'Valor Pendente');
         for (index in clientes) {
+            var div = [];
+            for (index1 in dividas) {
+                if (dividas[index1].Entidade == clientes[index].CodCliente) {
+                    div.push(dividas[index1].ValorTotal);
+                    div.push(dividas[index1].ValorPendente);
+                    break;
+                }
+            }
             data.addRows([
-                [clientes[index].Entidade, clientes[index].Nome, clientes[index].ValorTotal, clientes[index].ValorPendente]
+                [clientes[index].CodCliente, clientes[index].NomeCliente, clientes[index].NumContribuinte, div[0],div[1]]
             ]);
         }
         // Set chart options

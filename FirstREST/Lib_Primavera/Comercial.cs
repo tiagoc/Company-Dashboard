@@ -16,6 +16,43 @@ namespace FirstREST.Lib_Primavera
     public class Comercial
     {
 
+        #region Historico
+        public static List<Model.Historico> GetHistorico()
+        {
+            ErpBS objMotor = new ErpBS();
+
+            StdBELista objList;
+
+            Model.Historico hist = new Model.Historico();
+            List<Model.Historico> historico = new List<Model.Historico>();
+
+
+            if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
+            {
+
+
+                objList = PriEngine.Engine.Consulta("SELECT TipoEntidade, Entidade, TipoDoc, NumDoc, DataDoc, ValorTotal FROM HISTORICO");
+
+                while (!objList.NoFim())
+                {
+                    hist = new Model.Historico();
+                    hist.TipoEntidade = objList.Valor("TipoEntidade");
+                    hist.Entidade = objList.Valor("Entidade");
+                    hist.TipoDoc = objList.Valor("TipoDoc");
+                    hist.NumDoc = objList.Valor("NumDoc");
+                    hist.Data = (objList.Valor("DataDoc").ToString());
+                    hist.ValorTotal = objList.Valor("ValorTotal");
+                    historico.Add(hist);
+                    objList.Seguinte();
+
+                }
+
+                return historico;
+            }
+            else
+                return null;
+        }
+        #endregion Historico;
         # region Fornecedor
 
         public static List<Dictionary<string, string>> ListaTopArtigoComprado()
@@ -619,7 +656,7 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
-                objListCab = PriEngine.Engine.Consulta("SELECT id, NumDocExterno, Entidade, DataDoc, NumDoc, TotalMerc, Serie From CabecCompras"); //where TipoDoc='VGR'
+                objListCab = PriEngine.Engine.Consulta("SELECT id, NumDocExterno, Entidade, DataDoc, NumDoc, TotalMerc, Serie From CabecCompras WHERE TipoDoc = 'VFA'"); //where TipoDoc='VGR'
                 while (!objListCab.NoFim())
                 {
                     dc = new Model.DocCompra();
@@ -684,7 +721,7 @@ namespace FirstREST.Lib_Primavera
                     myGR.set_Entidade(dc.Entidade);
                     myGR.set_NumDocExterno(dc.NumDocExterno);
                     myGR.set_Serie(dc.Serie);
-                    myGR.set_Tipodoc("VGR");
+                    myGR.set_Tipodoc("VFA");
                     myGR.set_TipoEntidade("F");
                     // Linhas do documento para a lista de linhas
                     lstlindv = dc.LinhasDoc;
@@ -799,7 +836,7 @@ namespace FirstREST.Lib_Primavera
 
             if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
-                objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc"); //where TipoDoc='ECL'
+                objListCab = PriEngine.Engine.Consulta("SELECT id, Entidade, Data, NumDoc, TotalMerc, Serie From CabecDoc WHERE TipoDoc='FA'"); //where TipoDoc='ECL'
                 while (!objListCab.NoFim())
                 {
                     dv = new Model.DocVenda();
