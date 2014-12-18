@@ -51,12 +51,12 @@
             ['%'],
             [parseInt( 100 - (porPagar / pagamentoTotal) * 100)]
             ]);
-            $("#porpagar").text(porPagar * (-1));
+            $("#porpagar").text((porPagar * (-1)).toFixed(2));
             var data3 = google.visualization.arrayToDataTable([
             ['%'],
             [parseInt(100 - (porReceber / recebimentoTotal) * 100)]
             ]);
-            $("#porreceber").text(porReceber);
+            $("#porreceber").text(porReceber.toFixed(2));
 
             var options = {
               width: 400, height: 120,

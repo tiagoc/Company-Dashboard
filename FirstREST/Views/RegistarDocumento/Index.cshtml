@@ -1,14 +1,8 @@
 ﻿@{
     ViewBag.Title = "Registar Faturas";
 }
+
 <script>
-
-    var linhasDocVenda = [{ "CodArtigo": "MV.0001", "Quantidade": 5, "Armazem": "A2", "PrecoUnitario": 30, "Desconto": 0 }];
-    var docvenda = { "Entidade": "C0002", "Serie": "A", "LinhasDoc": linhasDocVenda };
-
-    var linhasDocCompra = [{ "CodArtigo": "MB.0001", "Quantidade": 5, "Armazem": "A2", "PrecoUnitario": 5, "Desconto": 2 }];
-    var doccompra = { "Entidade": "F0001", "NumDocExterno": "1", "Serie": "A", "LinhasDoc": linhasDocCompra };
-
     function press(id, id2) {
         $("#" + id).fadeIn();
         $("#" + id2).fadeOut();
@@ -28,17 +22,46 @@
         }
     }
 
-    var registarCompra = $.ajax({
-        type: "POST",
-        url: "/api/doccompra",
-        data: doccompra
-    });
+    function registarVenda() {
+        var entidade = $("#fatura_venda #Entidade").val();
+        var serie = $("#fatura_venda #Serie").val();
+        var codartigo = $("#fatura_venda #CodArtigo").val();
+        var armazem = $("#fatura_venda #Armazem").val();
+        var quantidade = $("#fatura_venda #Quantidade").val();
+        var precounitario = $("#fatura_venda #PrecoUnitario").val();
+        var desconto = $("#fatura_venda #Desconto").val();
+        $.ajax({
+            type: "POST",
+            url: "/api/docvenda",
+            data: {"Entidade":entidade,"Serie":serie,"linhasDocVenda":[{"CodArtigo":codartigo,"Quantidade":quantidade,"Armazem":armazem,"PrecoUnitario":precounitario,"Desconto":desconto}]},
+            complete: function(){
+                jQuery("#form_venda").submit();
+            }
+        });
 
-    var registarVenda = $.ajax({
-        type: "POST",
-        url: "/api/docvenda",
-        data: docvenda
-    });
+    }
+    var linhasDocVenda = [{ "CodArtigo": "MV.0001", "Quantidade": 5, "Armazem": "A2", "PrecoUnitario": 30, "Desconto": 0 }];
+    var docvenda = { "Entidade": "C0002", "Serie": "A", "LinhasDoc": linhasDocVenda };
+    var linhasDocCompra = [{ "CodArtigo": "MB.0001", "Quantidade": 5, "Armazem": "A2", "PrecoUnitario": 5, "Desconto": 2 }];
+    var doccompra = { "Entidade": "F0001", "NumDocExterno": "1", "Serie": "A", "LinhasDoc": linhasDocCompra };
+    function registarCompra() {
+        var entidade = $("#fatura_compra #Entidade").val();
+        var serie = $("#fatura_compra #Serie").val();
+        var codartigo = $("#fatura_compra #CodArtigo").val();
+        var armazem = $("#fatura_compra #Armazem").val();
+        var quantidade = $("#fatura_compra #Quantidade").val();
+        var precounitario = $("#fatura_compra #PrecoUnitario").val();
+        var desconto = $("#fatura_compra #Desconto").val();
+        var numdocexterno = $("#fatura_compra #NumDocExterno").val();
+        $.ajax({
+            type: "POST",
+            url: "/api/doccompra",
+            data: { "Entidade": entidade, "NumDocExterno": numdocexterno, "Serie": serie, "LinhasDoc": [{ "CodArtigo": codartigo, "Quantidade": quantidade, "Armazem": armazem, "PrecoUnitario": precounitario, "Desconto": desconto }] },
+            complete: function () {
+                jQuery("#form_compra").submit();
+            }
+        });
+    }
 
 </script>
 
@@ -46,10 +69,16 @@
 <div id="start">
     <div class="row">
         <div class="col-md-6" style=" text-align: center">
-            <p><button class="btn btn-lg btn-success" onclick="press('fatura_compra','start')">Compra</button></p>
+            <h3>Comprar</h3>
+            <span class="glyphicon glyphicon-shopping-cart btn-lg">
+            </span>
+            <p><button class="btn btn-lg btn-success" onclick="press('fatura_compra','start')">Proceder a Uma Compra</button></p>
         </div>
         <div class="col-md-6" style=" text-align: center">
-            <p><button class="btn btn-lg btn-primary" onclick="press('fatura_venda','start')">Venda</button></p>
+            <h3>Vender</h3>
+            <span class="glyphicon glyphicon-euro btn-lg">
+            </span>
+            <p><button class="btn btn-lg btn-primary" onclick="press('fatura_venda','start')">Proceder a Uma Venda</button></p>
         </div>
 
     </div>
@@ -60,56 +89,56 @@
     <div class="row">
         <div class="col-md-12">
             <h3>Introduza os campos da fatura</h3>
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" id="form_venda">
                 
                 <div class="form-group">
                     <label for="Entidade" class="col-sm-2 control-label">Entidade</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="Entidade">
+                        <input type="text" class="form-control" id="Entidade" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="Serie" class="col-sm-2 control-label">Serie</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="Serie">
+                        <input type="text" class="form-control" id="Serie" required>
                     </div>
                 </div>
                 <div id="Artigo_Venda">
                     <div class="form-group">
                         <label for="CodArtigo" class="col-sm-2 control-label">Código do Artigo</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="CodArtigo" onchange="registarVenda()"></select>
+                            <input type="text" class="form-control" id="CodArtigo" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Armazem" class="col-sm-2 control-label">Armazem</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="Armazem">
+                            <input type="text" class="form-control" id="Armazem" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Quantidade" class="col-sm-2 control-label">Quantidade</label>
                         <div class="col-sm-10">
-                            <input type="number" step="1" class="form-control" id="Quantidade">
+                            <input type="number" step="1" class="form-control" id="Quantidade" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Preco" class="col-sm-2 control-label">Preço Unitário</label>
                         <div class="col-sm-10">
-                            <input type="number" step="0.01" class="form-control" id="PrecoUnitario">
+                            <input type="number" step="0.01" class="form-control" id="PrecoUnitario" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Desconto" class="col-sm-2 control-label">Desconto</label>
                         <div class="col-sm-10">
-                            <input type="number" step="0.01" class="form-control" id="Desconto">
+                            <input type="number" step="0.01" class="form-control" id="Desconto" value="0" required>
                         </div>
                     </div>
                 </div>
-                <input type="button" value="Adicionar outro artigo" onclick="addInput('Artigo_Venda');">
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success">Submeter</button>
+                        <!--<button type="button" onclick="addInput('Artigo_Venda');" class="btn btn-default text-center">Adicionar outro artigo</button>-->
+                        <button type="submit" class="btn btn-success" onclick="registarVenda(); return false;">Submeter</button>
                     </div>
                 </div>
             </form>
@@ -123,61 +152,61 @@
     <div class="row">
         <div class="col-md-12">
             <h3>Introduza os campos da fatura</h3>
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" id="form_compra">
                 <div class="form-group">
                     <label for="Entidade" class="col-sm-2 control-label">Entidade</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="Entidade">
+                        <input type="text" class="form-control" id="Entidade" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="NumDocExterno" class="col-sm-2 control-label">Número do Documento Externo</label>
                     <div class="col-sm-10">
-                        <input type="number" step="1" class="form-control" id="NumDocExterno">
+                        <input type="number" step="1" class="form-control" id="NumDocExterno" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="Serie" class="col-sm-2 control-label">Serie</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="Serie">
+                        <input type="text" class="form-control" id="Serie" required>
                     </div>
                 </div>
                 <div id="Artigo_Compra">
                     <div class="form-group">
                         <label for="CodArtigo" class="col-sm-2 control-label">Código do Artigo</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="CodArtigo" onchange="registarCompra()"></select>
+                            <input class="form-control" id="CodArtigo" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Armazem" class="col-sm-2 control-label">Armazem</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="Armazem">
+                            <input type="text" class="form-control" id="Armazem" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Quantidade" class="col-sm-2 control-label">Quantidade</label>
                         <div class="col-sm-10">
-                            <input type="number" step="1" class="form-control" id="Quantidade">
+                            <input type="number" step="1" class="form-control" id="Quantidade" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Preco" class="col-sm-2 control-label">Preço Unitário</label>
                         <div class="col-sm-10">
-                            <input type="number" step="0.01" class="form-control" id="PrecoUnitario">
+                            <input type="number" step="0.01" class="form-control" id="PrecoUnitario" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Desconto" class="col-sm-2 control-label">Desconto</label>
                         <div class="col-sm-10">
-                            <input type="number" step="0.01" class="form-control" id="Desconto">
+                            <input type="number" step="0.01" class="form-control" id="Desconto" value="0"required>
                         </div>
                     </div>
                 </div>
-                <input type="button" value="Adicionar outro artigo" onclick="addInput('Artigo_Compra');">
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-success">Submeter</button>
+                            <!--<button type="button" onclick="addInput('Artigo_Compra');" class="btn btn-default text-center">Adicionar outro artigo</button>-->
+                            <button type="submit" class="btn btn-success" onclick="registarCompra(); return false;">Submeter</button>
                         </div>
                     </div>
 </form>
