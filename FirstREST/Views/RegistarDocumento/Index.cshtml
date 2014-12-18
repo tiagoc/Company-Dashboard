@@ -26,14 +26,13 @@
         var entidade = $("#fatura_venda #Entidade").val();
         var serie = $("#fatura_venda #Serie").val();
         var codartigo = $("#fatura_venda #CodArtigo").val();
-        var armazem = $("#fatura_venda #Armazem").val();
-        var quantidade = $("#fatura_venda #Quantidade").val();
-        var precounitario = $("#fatura_venda #PrecoUnitario").val();
-        var desconto = $("#fatura_venda #Desconto").val();
+        var quantidade = parseInt($("#fatura_venda #Quantidade").val());
+        var precounitario =parseInt($("#fatura_venda #PrecoUnitario").val());
+        var desconto = parseInt($("#fatura_venda #Desconto").val());
         $.ajax({
             type: "POST",
             url: "/api/docvenda",
-            data: {"Entidade":entidade,"Serie":serie,"linhasDocVenda":[{"CodArtigo":codartigo,"Quantidade":quantidade,"Armazem":armazem,"PrecoUnitario":precounitario,"Desconto":desconto}]},
+            data: { "Entidade": entidade, "Serie": serie, "LinhasDoc": [{ "CodArtigo": codartigo, "Quantidade": quantidade, "PrecoUnitario": precounitario, "Desconto": desconto }] },
             complete: function(){
                 jQuery("#form_venda").submit();
             }
@@ -49,9 +48,9 @@
         var serie = $("#fatura_compra #Serie").val();
         var codartigo = $("#fatura_compra #CodArtigo").val();
         var armazem = $("#fatura_compra #Armazem").val();
-        var quantidade = $("#fatura_compra #Quantidade").val();
-        var precounitario = $("#fatura_compra #PrecoUnitario").val();
-        var desconto = $("#fatura_compra #Desconto").val();
+        var quantidade = parseInt($("#fatura_compra #Quantidade").val());
+        var precounitario = parseInt($("#fatura_compra #PrecoUnitario").val());
+        var desconto =parseInt($("#fatura_compra #Desconto").val());
         var numdocexterno = $("#fatura_compra #NumDocExterno").val();
         $.ajax({
             type: "POST",
@@ -94,38 +93,32 @@
                 <div class="form-group">
                     <label for="Entidade" class="col-sm-2 control-label">Entidade</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="Entidade" required>
+                        <input type="text" class="form-control" id="Entidade" value="C0002" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="Serie" class="col-sm-2 control-label">Serie</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="Serie" required>
+                        <input type="text" class="form-control" id="Serie" value="A" required>
                     </div>
                 </div>
                 <div id="Artigo_Venda">
                     <div class="form-group">
                         <label for="CodArtigo" class="col-sm-2 control-label">Código do Artigo</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="CodArtigo" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="Armazem" class="col-sm-2 control-label">Armazem</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="Armazem" required>
+                            <input type="text" class="form-control" id="CodArtigo" value="MV.0002" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Quantidade" class="col-sm-2 control-label">Quantidade</label>
                         <div class="col-sm-10">
-                            <input type="number" step="1" class="form-control" id="Quantidade" required>
+                            <input type="number" step="1" class="form-control" id="Quantidade" value="0" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Preco" class="col-sm-2 control-label">Preço Unitário</label>
                         <div class="col-sm-10">
-                            <input type="number" step="0.01" class="form-control" id="PrecoUnitario" required>
+                            <input type="number" step="0.01" class="form-control" id="PrecoUnitario" value="0" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -156,50 +149,50 @@
                 <div class="form-group">
                     <label for="Entidade" class="col-sm-2 control-label">Entidade</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="Entidade" required>
+                        <input type="text" class="form-control" id="Entidade" value="F0001" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="NumDocExterno" class="col-sm-2 control-label">Número do Documento Externo</label>
                     <div class="col-sm-10">
-                        <input type="number" step="1" class="form-control" id="NumDocExterno" required>
+                        <input type="number" step="1" class="form-control" value="2" id="NumDocExterno" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="Serie" class="col-sm-2 control-label">Serie</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="Serie" required>
+                        <input type="text" class="form-control" id="Serie" value="A" required>
                     </div>
                 </div>
                 <div id="Artigo_Compra">
                     <div class="form-group">
                         <label for="CodArtigo" class="col-sm-2 control-label">Código do Artigo</label>
                         <div class="col-sm-10">
-                            <input class="form-control" id="CodArtigo" required>
+                            <input class="form-control" id="CodArtigo" value="MB.0001" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Armazem" class="col-sm-2 control-label">Armazem</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="Armazem" required>
+                            <input type="text" class="form-control" value="A2" id="Armazem" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Quantidade" class="col-sm-2 control-label">Quantidade</label>
                         <div class="col-sm-10">
-                            <input type="number" step="1" class="form-control" id="Quantidade" required>
+                            <input type="number" step="1" class="form-control" value="0" id="Quantidade" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Preco" class="col-sm-2 control-label">Preço Unitário</label>
                         <div class="col-sm-10">
-                            <input type="number" step="0.01" class="form-control" id="PrecoUnitario" required>
+                            <input type="number" step="0.01" class="form-control" value="0" id="PrecoUnitario" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="Desconto" class="col-sm-2 control-label">Desconto</label>
                         <div class="col-sm-10">
-                            <input type="number" step="0.01" class="form-control" id="Desconto" value="0"required>
+                            <input type="number" step="0.01" class="form-control" id="Desconto" value="0" required>
                         </div>
                     </div>
                 </div>
