@@ -315,6 +315,7 @@
     <Compile Include="Lib_Primavera\Model\LinhaDocCompra.cs" />
     <Compile Include="Lib_Primavera\Model\LinhaDocVenda.cs" />
     <Compile Include="Lib_Primavera\Model\Pagamento.cs" />
+    <Compile Include="Lib_Primavera\Model\Pendente.cs" />
     <Compile Include="Lib_Primavera\Model\Recebimento.cs" />
     <Compile Include="Lib_Primavera\Model\RespostaErro.cs" />
     <Compile Include="Lib_Primavera\PriEngine.cs" />

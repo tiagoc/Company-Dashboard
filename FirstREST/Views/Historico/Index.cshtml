@@ -12,7 +12,7 @@
     google.setOnLoadCallback(historicoFornecedores);
     var historico = [];
 
-    var requestClientes = $.ajax({
+    var requestHistorico = $.ajax({
         url: "/api/historico",
         type: 'GET',
         async: false,
@@ -23,7 +23,9 @@
         },
         success: function (data) {
             for (index in data) {
-                historico.push(data[index]);
+                if(data[index].TipoDoc == 'VFA' || data[index].TipoDoc == 'FA'){
+                    historico.push(data[index]);
+                }
             }
             $("#loading").fadeOut();
         }

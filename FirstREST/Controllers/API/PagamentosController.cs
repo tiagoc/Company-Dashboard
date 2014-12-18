@@ -15,5 +15,28 @@ namespace FirstREST.Controllers.API
         {
             return Lib_Primavera.Comercial.ListarPagamentosPendentes();
         }
+        
+        
+        public HttpResponseMessage Post(Lib_Primavera.Model.Pagamento pagamento)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+
+            erro = Lib_Primavera.Comercial.Pagamento_Atualizar(pagamento);
+
+            if (erro.Erro == 0)
+            {
+                var response = Request.CreateResponse(
+                   HttpStatusCode.Created, "Valor pago com sucesso");
+                string uri = Url.Link("DefaultApi", new { });
+                response.Headers.Location = new Uri(uri);
+                return response;
+            }
+
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+        }
     }
 }
