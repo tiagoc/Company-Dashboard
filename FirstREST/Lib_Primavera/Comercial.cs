@@ -8,9 +8,7 @@ using Interop.StdBE800;
 using Interop.GcpBE800;
 using ADODB;
 using Interop.IGcpBS800;
-//using Interop.StdBESql800;
-//using Interop.StdBSSql800;
-
+using Interop;
 namespace FirstREST.Lib_Primavera
 {
     public class Comercial
@@ -469,7 +467,7 @@ namespace FirstREST.Lib_Primavera
             if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT dbo.Pendentes.ValorTotal, dbo.Pendentes.ValorPendente, dbo.Fornecedores.Fornecedor, dbo.Fornecedores.Nome FROM dbo.Pendentes INNER JOIN dbo.Fornecedores ON dbo.Pendentes.Entidade = dbo.Fornecedores.Fornecedor");
+                objList = PriEngine.Engine.Consulta("SELECT dbo.Pendentes.ValorTotal, dbo.Pendentes.ValorPendente, dbo.Fornecedores.Fornecedor, dbo.Fornecedores.Nome, dbo.Pendentes.NumDoc FROM dbo.Pendentes INNER JOIN dbo.Fornecedores ON dbo.Pendentes.Entidade = dbo.Fornecedores.Fornecedor");
 
 
                 while (!objList.NoFim())
@@ -479,6 +477,7 @@ namespace FirstREST.Lib_Primavera
                     pag.Nome = objList.Valor("Nome");
                     pag.ValorPendente = objList.Valor("ValorPendente");
                     pag.ValorTotal = objList.Valor("ValorTotal");
+                    pag.NumDoc = objList.Valor("NumDoc");
 
                     listPags.Add(pag);
                     objList.Seguinte();
@@ -507,7 +506,7 @@ namespace FirstREST.Lib_Primavera
             if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT        dbo.Pendentes.Entidade, SUM(dbo.Pendentes.ValorTotal) AS ValorTotal, SUM(dbo.Pendentes.ValorPendente) AS ValorPendente, dbo.Clientes.Nome FROM dbo.Pendentes INNER JOIN dbo.Clientes ON dbo.Pendentes.Entidade = dbo.Clientes.Cliente GROUP BY dbo.Clientes.Cliente, dbo.Pendentes.Entidade, dbo.Clientes.Nome");
+                objList = PriEngine.Engine.Consulta("SELECT dbo.Pendentes.Entidade, dbo.Pendentes.ValorTotal, dbo.Pendentes.ValorPendente, dbo.Clientes.Nome, dbo.Pendentes.NumDoc FROM dbo.Pendentes INNER JOIN dbo.Clientes ON dbo.Pendentes.Entidade = dbo.Clientes.Cliente");
 
 
                 while (!objList.NoFim())
@@ -517,6 +516,7 @@ namespace FirstREST.Lib_Primavera
                     rec.Nome = objList.Valor("Nome");
                     rec.ValorPendente = objList.Valor("ValorPendente");
                     rec.ValorTotal = objList.Valor("ValorTotal");
+                    rec.NumDoc = objList.Valor("NumDoc");
 
                     listPags.Add(rec);
                     objList.Seguinte();
@@ -724,7 +724,25 @@ namespace FirstREST.Lib_Primavera
 
         // ------ Documentos de venda ----------------------
 
+        public static Model.RespostaErro Pagamento_Atualizar(Model.Pagamento pg)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+            
+            return erro;
+        }
+            /*
+            pendente.set_NumDoc(pg.NumDoc);
+            double val_insert = pg.ValorPendente - valor;
+            if (val_insert < 0) val_insert = 0;
+            pendente.set_ValorPendente(val_insert);
+            //pendente = Lib_Primavera.PriEngine.Engine.Comercial.Pendentes.
+             * /
+        }
 
+        /*public static Model.RespostaErro Recebimento_Atualizar(Model.Recebimento rb)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
+        }*/
 
         public static Model.RespostaErro Encomendas_New(Model.DocVenda dv)
         {

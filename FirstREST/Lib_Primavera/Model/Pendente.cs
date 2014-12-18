@@ -5,34 +5,29 @@ using System.Web;
 
 namespace FirstREST.Lib_Primavera.Model
 {
-    public class Pagamento
+    public class Pendente
     {
-        public string Nome
+        public string Filial
         {
             get;
             set;
         }
-        public string Entidade
+        public string Modulo
         {
             get;
             set;
         }
-        public double ValorTotal
+        public string TipoDoc
         {
             get;
             set;
         }
-        public double ValorPendente
+        public string strSerie
         {
             get;
             set;
         }
-        public string NumDoc
-        {
-            get;
-            set;
-        }
-        public double ValorAPagar
+        public int NumDocInt
         {
             get;
             set;
