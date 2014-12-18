@@ -505,18 +505,18 @@ namespace FirstREST.Lib_Primavera
             {
 
 
-                objList = PriEngine.Engine.Consulta("SELECT dbo.Pendentes.ValorTotal, dbo.Pendentes.ValorPendente, dbo.Fornecedores.Fornecedor, dbo.Fornecedores.Nome, dbo.Pendentes.NumDoc FROM dbo.Pendentes INNER JOIN dbo.Fornecedores ON dbo.Pendentes.Entidade = dbo.Fornecedores.Fornecedor");
+                objList = PriEngine.Engine.Consulta("SELECT dbo.Pendentes.Serie, dbo.Pendentes.ValorTotal, dbo.Pendentes.ValorPendente, dbo.Fornecedores.Fornecedor, dbo.Fornecedores.Nome, dbo.Pendentes.NumDocInt FROM dbo.Pendentes INNER JOIN dbo.Fornecedores ON dbo.Pendentes.Entidade = dbo.Fornecedores.Fornecedor");
 
                 while (!objList.NoFim())
                 {
                     pag = new Model.Pagamento();
                     pag.Entidade = objList.Valor("Fornecedor");
                     pag.Nome = objList.Valor("Nome");
-
+                    pag.Serie = objList.Valor("Serie");
                     pag.ValorPendente = Math.Round(objList.Valor("ValorPendente"),2);
                     pag.ValorTotal = Math.Round(objList.Valor("ValorTotal"),2);
 
-                    pag.NumDoc = objList.Valor("NumDoc");
+                    pag.NumDoc = objList.Valor("NumDocInt");
 
 
                     listPags.Add(pag);
@@ -546,7 +546,7 @@ namespace FirstREST.Lib_Primavera
             if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
             {
 
-                objList = PriEngine.Engine.Consulta("SELECT dbo.Pendentes.Entidade, dbo.Pendentes.ValorTotal, dbo.Pendentes.ValorPendente, dbo.Clientes.Nome, dbo.Pendentes.NumDoc FROM dbo.Pendentes INNER JOIN dbo.Clientes ON dbo.Pendentes.Entidade = dbo.Clientes.Cliente");
+                objList = PriEngine.Engine.Consulta("SELECT dbo.Pendentes.Entidade,dbo.Pendentes.Serie, dbo.Pendentes.ValorTotal, dbo.Pendentes.ValorPendente, dbo.Clientes.Nome, dbo.Pendentes.NumDocInt FROM dbo.Pendentes INNER JOIN dbo.Clientes ON dbo.Pendentes.Entidade = dbo.Clientes.Cliente");
 
 
                 while (!objList.NoFim())
@@ -554,11 +554,11 @@ namespace FirstREST.Lib_Primavera
                     rec = new Model.Recebimento();
                     rec.Entidade = objList.Valor("Entidade");
                     rec.Nome = objList.Valor("Nome");
-
+                    rec.Serie = objList.Valor("Serie");
                     rec.ValorPendente = Math.Round(objList.Valor("ValorPendente"),2);
                     rec.ValorTotal = Math.Round(objList.Valor("ValorTotal"),2);
 
-                    rec.NumDoc = objList.Valor("NumDoc");
+                    rec.NumDoc = objList.Valor("NumDocInt");
 
                     listPags.Add(rec);
                     objList.Seguinte();
@@ -769,22 +769,102 @@ namespace FirstREST.Lib_Primavera
         public static Model.RespostaErro Pagamento_Atualizar(Model.Pagamento pg)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
-            
-            return erro;
-        }
-            /*
-            pendente.set_NumDoc(pg.NumDoc);
-            double val_insert = pg.ValorPendente - valor;
-            if (val_insert < 0) val_insert = 0;
-            pendente.set_ValorPendente(val_insert);
-            //pendente = Lib_Primavera.PriEngine.Engine.Comercial.Pendentes.
-             * /
-        }
 
-        /*public static Model.RespostaErro Recebimento_Atualizar(Model.Recebimento rb)
+            GcpBEDocumentoLiq liq = new GcpBEDocumentoLiq();
+
+            PreencheRelacaoCCT rel = PreencheRelacaoCCT.cctDadosTodos;
+
+            try
+            {
+                if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
+                {
+                    // Atribui valores ao cabecalho do doc
+                    //myEnc.set_DataDoc(dv.Data);
+                    liq.set_Entidade(pg.Entidade);
+                    liq.set_Serie(pg.Serie);
+                    liq.set_Tipodoc("APR");
+                    liq.set_TipoEntidade("F");
+                    erro.Erro = -1;
+                    PriEngine.Engine.Comercial.Liquidacoes.PreencheDadosRelacionados(liq, rel);
+                    // Linhas do documento para a lista de linhas
+                    PriEngine.Engine.Comercial.Liquidacoes.AdicionaLinha(liq, "000", "C", "VFA", pg.Serie, pg.NumDoc, 1, "AGP", 0,pg.ValorAPagar);
+                    PriEngine.Engine.IniciaTransaccao();
+                    erro.Erro = 0;
+                    PriEngine.Engine.Comercial.Liquidacoes.Actualiza(liq, "Teste");
+                    PriEngine.Engine.TerminaTransaccao();
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if(erro.Erro != -1)
+                    PriEngine.Engine.DesfazTransaccao();
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+
+        }
+           
+
+        public static Model.RespostaErro Recebimento_Atualizar(Model.Recebimento rb)
         {
             Lib_Primavera.Model.RespostaErro erro = new Model.RespostaErro();
-        }*/
+            
+            GcpBEDocumentoLiq liq = new GcpBEDocumentoLiq();
+
+            PreencheRelacaoCCT rel = PreencheRelacaoCCT.cctDadosTodos;
+
+            try
+            {
+                if (PriEngine.InitializeCompany("GREENOAK", "", "") == true)
+                {
+                    // Atribui valores ao cabecalho do doc
+                    //myEnc.set_DataDoc(dv.Data);
+                    liq.set_Entidade(rb.Entidade);
+                    liq.set_Serie(rb.Serie);
+                    liq.set_Tipodoc("RE");
+                    liq.set_TipoEntidade("C");
+                    erro.Erro = -1;
+                    PriEngine.Engine.Comercial.Liquidacoes.PreencheDadosRelacionados(liq, rel);
+                    // Linhas do documento para a lista de linhas
+                    PriEngine.Engine.Comercial.Liquidacoes.AdicionaLinha(liq,"000","V","FA",rb.Serie,rb.NumDoc,1,"PEN",0,rb.ValorAReceber);
+                    PriEngine.Engine.IniciaTransaccao();
+                    erro.Erro = 0;
+                    PriEngine.Engine.Comercial.Liquidacoes.Actualiza(liq, "Teste");
+                    PriEngine.Engine.TerminaTransaccao();
+                    erro.Erro = 0;
+                    erro.Descricao = "Sucesso";
+                    return erro;
+                }
+                else
+                {
+                    erro.Erro = 1;
+                    erro.Descricao = "Erro ao abrir empresa";
+                    return erro;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (erro.Erro != -1)
+                    PriEngine.Engine.DesfazTransaccao();
+                erro.Erro = 1;
+                erro.Descricao = ex.Message;
+                return erro;
+            }
+        }
 
         public static Model.RespostaErro Encomendas_New(Model.DocVenda dv)
         {

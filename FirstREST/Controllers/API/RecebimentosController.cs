@@ -16,5 +16,26 @@ namespace FirstREST.Controllers.API
             return Lib_Primavera.Comercial.ListarRecebimentosPendentes();
         }
 
+        public HttpResponseMessage Post(Lib_Primavera.Model.Recebimento recebimento)
+        {
+            Lib_Primavera.Model.RespostaErro erro = new Lib_Primavera.Model.RespostaErro();
+
+            erro = Lib_Primavera.Comercial.Recebimento_Atualizar(recebimento);
+
+            if (erro.Erro == 0)
+            {
+                var response = Request.CreateResponse(
+                   HttpStatusCode.Created, "Valor recebido com sucesso");
+                string uri = Url.Link("DefaultApi", new { });
+                response.Headers.Location = new Uri(uri);
+                return response;
+            }
+
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, erro.Descricao);
+            }
+
+        }
     }
 }

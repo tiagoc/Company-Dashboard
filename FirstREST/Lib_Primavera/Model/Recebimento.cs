@@ -27,7 +27,17 @@ namespace FirstREST.Lib_Primavera.Model
             get;
             set;
         }
-        public string NumDoc
+        public int NumDoc
+        {
+            get;
+            set;
+        }
+        public double ValorAReceber
+        {
+            get;
+            set;
+        }
+        public string Serie
         {
             get;
             set;
