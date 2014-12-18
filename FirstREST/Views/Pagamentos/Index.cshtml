@@ -85,7 +85,12 @@
         }
         function loadDividaFornecedor() {
             var index = $("#fornecedor").val();
-            $("#valor_divida_pagar").val(fornecedores[index].ValorPendente * (-1));
+            if (index != "") {
+                $("#valor_divida_pagar").val(fornecedores[index].ValorPendente * (-1)); 
+            }
+            else {
+                $("#valor_divida_pagar").val("");
+            }
         }
         function loadclientes() {
             for (index in clientes) {
@@ -94,7 +99,56 @@
         }
         function loadDividaCliente() {
             var index = $("#cliente").val();
-            $("#valor_divida_receber").val(clientes[index].ValorPendente);
+            if(index != ""){
+                $("#valor_divida_receber").val(clientes[index].ValorPendente);
+            }
+            else {
+                $("#valor_divida_receber").val("");
+            }
+        }
+        function submeterPagamento() {
+            var index = $("#fornecedor").val();
+            var data = fornecedores[index];
+            var valor_pagar = $("#valor_saudar").val();
+            data["ValorAPagar"] = parseFloat(valor_pagar);
+
+            $.ajax({
+                url: "/api/Pagamentos",
+                type: 'POST',
+                data: { "Nome": data["Nome"], Entidade: data["Entidade"], "ValorTotal": data["ValorTotal"], "ValorPendente": data["ValorPendente"], "NumDoc": data["NumDoc"], "ValorAPagar": data["ValorAPagar"], "Serie": data["Serie"] },
+                error: function () {
+                    alert("The form was not submitted");
+                },
+                sucess: function () {
+                    alert("The form was submitted");
+                },
+                complete: function () {
+                    jQuery("#formpagar").submit();
+                }
+            });
+            return false;
+        }
+        function submeterRecebimento() {
+            var index = $("#cliente").val();
+            var data = clientes[index];
+            var valor_receber = $("#valor_receber").val();
+            data["ValorAReceber"] = parseFloat(valor_receber);
+
+            $.ajax({
+                url: "/api/Recebimentos",
+                type: 'POST',
+                data: { "Nome": data["Nome"], Entidade: data["Entidade"], "ValorTotal": data["ValorTotal"], "ValorPendente": data["ValorPendente"], "NumDoc": data["NumDoc"], "ValorAReceber": data["ValorAReceber"], "Serie": data["Serie"] },
+                error: function () {
+                    alert("The form was not submitted");
+                },
+                sucess: function () {
+                    alert("The form was submitted");
+                },
+                complete: function () {
+                    jQuery("#formpagar").submit();
+                }
+            });
+            return false;
         }
 </script>
 <div id="start">
@@ -117,29 +171,31 @@
     <div class="row">
         <div class="col-md-12">
             <h3>Pagar dívida a Fornecedor</h3>
-            <form class="form-horizontal" role="form">
+            <form id="formpagar" class="form-horizontal" role="form">
                 <div class="form-group">
                     <label for="fornecedor" class="col-sm-2 control-label">Fornecedor</label>
                     <div class="col-sm-10">
-                        <select class="form-control" id="fornecedor" onchange="loadDividaFornecedor()"></select>
+                        <select class="form-control" id="fornecedor" onchange="loadDividaFornecedor()" required>
+                            <option></option>
+                        </select>
                         <script>loadfornecedores();</script>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="valor_divida_pagar" class="col-sm-2 control-label">Valor em Dívida</label>
                     <div class="col-sm-10">
-                        <input type="number" step="0.01" class="form-control" id="valor_divida_pagar" placeholder="Valor em dívida" disabled>
+                        <input type="number" step="0.01" class="form-control" id="valor_divida_pagar" placeholder="Valor em dívida" readonly required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="valor_saudar" class="col-sm-2 control-label">Valor a Saudar</label>
                     <div class="col-sm-10">
-                        <input type="number" step="0.01" class="form-control" id="valor_saudar" placeholder="Valor a saudar">
+                        <input type="number" step="0.01" class="form-control" id="valor_saudar" placeholder="Valor a saudar" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success">Validar</button>
+                        <button class="btn btn-success" onclick="submeterPagamento();">Validar</button>
                     </div>
                 </div>
             </form>
@@ -155,7 +211,9 @@
                 <div class="form-group">
                     <label for="cliente" class="col-sm-2 control-label">Cliente</label>
                     <div class="col-sm-10">
-                        <select class="form-control" id="cliente" onchange="loadDividaCliente();"></select>
+                        <select class="form-control" id="cliente" onchange="loadDividaCliente();">
+                            <option></option>
+                        </select>
                         <script>loadclientes();</script>
                     </div>
                 </div>
@@ -173,7 +231,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success">Validar</button>
+                        <button type="submit" class="btn btn-success" onclick="submeterRecebimento();">Validar</button>
                     </div>
                 </div>
             </form>
